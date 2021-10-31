@@ -1,165 +1,174 @@
-import { useForm } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import api from "../api.js";
+import { Modal, Button, Form } from "react-bootstrap";
+import { useState, useEffect, useImperativeHandle, forwardRef} from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
-function FormBarang() {
+const FormBarang = forwardRef((props,ref) => {
+  const [show, setShow] = useState(false);
+  const [data, setData] = useState(false);
+  const [type, setType] = useState("create");
+  const [id, setId] = useState(0);
+  const getData = async (id) => {
+    let request = await api.get("/barang/"+id);
+    setData(request.data);
+    console.log(data)
+  };
+
+  useImperativeHandle(ref, () => ({
+    handleShow(param,id){
+      setType(param)
+      setShow(true)
+      if(param!=="create"){
+        setId(id);
+        getData(id)
+      }
+    }
+  }))
+
+  const MySwal = withReactContent(Swal);
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     reset,
   } = useForm();
 
   const simpan = (data) => {
-    api.post("/barang",data).then((res)=>{
-        reset()
+    api.post("/barang", data).then((res) => {
+      setShow(false);
+      MySwal.fire({
+        title: <strong>Sukses !</strong>,
+        html: <i>Data Berhasil Ditambah !</i>,
+        icon: "success",
+      });
+      reset();
+      props.refresh();
     });
   };
 
+  const edit = (data) => {
+    // console.log(data,id)
+    api.put("/barang/"+id+"/update", data).then((res) => {
+      setShow(false);
+      MySwal.fire({
+        title: <strong>Sukses !</strong>,
+        html: <i>Data Berhasil Diupdate !</i>,
+        icon: "success",
+      });
+      reset();
+      props.refresh();
+    });
+  }
+
   return (
     <div>
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Launch demo modal
-      </button>
-
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content p-3">
-            <div className="modal-header">
-              <h4 className="modal-title" id="exampleModalLabel">
-                Tambah Data
-              </h4>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <form onSubmit={handleSubmit(simpan)}>
-              <div className="modal-body">
-                <div className="mb-3 row">
-                  <label className="form-label">Nama Barang</label>
-                  <div className="col-sm-12">
-                    <input
-                      {...register("nama_barang", { required: true })}
-                      type="text"
-                      className="form-control"
-                      placeholder = "Nama Barang"
-                    />
-                    {errors.nama_barang?.type === "required" && (
-                      <div className="text-danger">Nama barang is required</div>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-3 row">
-                  <label className="form-label">Tipe Barang</label>
-                  <div className="col-sm-12">
-                    <input
-                      {...register("tipe_barang", { required: true })}
-                      type="text"
-                      className="form-control"
-                      placeholder = "Tipe Barang"
-                    />
-                    {errors.tipe_barang?.type === "required" && (
-                      <div className="text-danger">
-                        {" "}
-                        Tipe Barang is required{" "}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-3 row">
-                  <label className="form-label">Kuantitas</label>
-                  <div className="col-sm-12">
-                    <input
-                      {...register("kuantitas", { required: true })}
-                      type="number"
-                      className="form-control"
-                      placeholder = "Kuantitas"
-                    />
-                    {errors.kuantitas?.type === "required" && (
-                      <div className="text-danger"> Kuantitas is required </div>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-3 row">
-                  <label className="form-label">Harga Rental</label>
-                  <div className="col-sm-12">
-                    <input
-                      {...register("harga_rental", { required: true })}
-                      type="number"
-                      className="form-control"
-                      placeholder = "Harga Rental"
-                    />
-                    {errors.harga_rental?.type === "required" && (
-                      <div className="text-danger">
-                        {" "}
-                        Harga Rental is required
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-3 row">
-                  <label className="form-label">Deskripsi</label>
-                  <div className="col-sm-12">
-                    <textarea
-                      {...register("deskripsi", { required: true })}
-                      type="text"
-                      className="form-control"
-                      placeholder = "Deskripsi"
-                    />
-                    {errors.deskripsi?.type === "required" && (
-                      <div className="text-danger">Deskripsi is required</div>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-3 row">
-                  <label className="form-label">Gambar</label>
-                  <div className="col-sm-12">
-                    <input
-                      {...register("gambar", { required: true })}
-                      className="form-control"
-                      name="gambar"
-                    //   type="file"
-                    //   accept="image/png, image/jpeg"
-                    //   id="formFileMultiple"
-                    //   multiple
-                    />
-                    {errors.gambar?.type === "required" && (
-                      <div className="text-danger">Gambar is required</div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  Save changes
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      <Modal show={show}>
+        <Modal.Header closeButton onClick={() => setShow(false)}>
+          <Modal.Title>{type==="create"?"Tambah":"Edit"} Data Barang</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={type==="create"?handleSubmit(simpan):handleSubmit(edit)}>
+          <Modal.Body>
+            <Form.Group className="mb-3">
+              <Form.Label>Nama Barang</Form.Label>
+              <Form.Control
+                {...register("nama_barang", { required: true })}
+                type="text"
+                placeholder="Nama Barang"
+                defaultValue = {data.nama_barang}
+              />
+              {errors.nama_barang?.type === "required" && (
+                <Form.Text className="text-danger">
+                  Nama barang is required
+                </Form.Text>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Tipe Barang</Form.Label>
+              <Form.Control
+                {...register("tipe_barang", { required: true })}
+                type="text"
+                placeholder="Tipe Barang"
+              />
+              {errors.tipe_barang?.type === "required" && (
+                <Form.Text className="text-danger">
+                  {" "}
+                  Tipe Barang is required{" "}
+                </Form.Text>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Kuantitas</Form.Label>
+              <Form.Control
+                {...register("kuantitas", { required: true })}
+                type="number"
+                placeholder="Kuantitas"
+              />
+              {errors.kuantitas?.type === "required" && (
+                <Form.Text className="text-danger">
+                  {" "}
+                  Kuantitas is required{" "}
+                </Form.Text>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Harga Rental</Form.Label>
+              <Form.Control
+                {...register("harga_rental", { required: true })}
+                type="number"
+                placeholder="Harga Rental"
+              />
+              {errors.harga_rental?.type === "required" && (
+                <Form.Text className="text-danger">
+                  {" "}
+                  Harga Rental is required
+                </Form.Text>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Deskripsi</Form.Label>
+              <Form.Control
+                {...register("deskripsi", { required: true })}
+                type="text"
+                as="textarea"
+                placeholder="Deskripsi"
+              />
+              {errors.deskripsi?.type === "required" && (
+                <Form.Text className="text-danger">
+                  Deskripsi is required
+                </Form.Text>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Gambar</Form.Label>
+              <Form.Control
+                {...register("gambar", { required: true })}
+                name="gambar"
+                //   type="file"
+                //   accept="image/png, image/jpeg"
+                //   id="formFileMultiple"
+                //   multiple
+              />
+              {errors.gambar?.type === "required" && (
+                <Form.Text className="text-danger">
+                  Gambar is required
+                </Form.Text>
+              )}
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShow(false)}>
+              Close Modal
+            </Button>
+            <Button type="submit" className="btn btn-primary">
+              Save changes
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </div>
   );
-}
+})
 export default FormBarang;
