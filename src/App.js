@@ -1,5 +1,4 @@
 import "./App.css";
-import "./barang/ListBarang"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ListBarang from "./barang/ListBarang";
 
