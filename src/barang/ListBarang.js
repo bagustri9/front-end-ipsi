@@ -96,6 +96,7 @@ function ListBarang() {
             <th scope="col">#</th>
             <th scope="col">Nama Barang</th>
             <th scope="col">Tipe Barang</th>
+            <th scope="col">Kuantitas</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -120,6 +121,12 @@ function ListBarang() {
                   style={{ cursor: "pointer" }}
                 >
                   {items.tipe_barang}
+                </td>
+                <td
+                  onClick={() => detailData(items.id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {items.kuantitas}
                 </td>
                 <td>
                   <div className="float-end">
