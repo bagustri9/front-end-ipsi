@@ -143,7 +143,7 @@ const FormBarang = forwardRef((props,ref) => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Gambar</Form.Label>
-              <Form.Control
+              <Form.Control 
                 {...register("gambar", { required: true })}
                 name="gambar"
                 //   type="file"
