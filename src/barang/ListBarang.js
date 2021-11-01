@@ -1,19 +1,34 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 import api from "../api.js";
 import FormBarang from "./FormBarang.js";
-import { Col, Table, Row, Button } from "react-bootstrap";
+import { Col, Table, Row, Button, Modal } from "react-bootstrap";
 import { BsXCircleFill, BsFillPencilFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 function ListBarang() {
+  const [show, setShow] = useState(false);
   const [datas, setDatas] = useState([]);
+  const [type, setType] = useState();
+  const [editData, setEditData] = useState();
   const swal = withReactContent(Swal);
   const fetchData = async () => {
     let request = await api.get("/barang");
     setDatas(request.data);
   };
-  const createModal = useRef();
+  const createModal = (tipe) =>{
+    setType(tipe)
+    setShow(true)
+    setEditData([])
+  }
+  const editModal = (tipe,data) =>{
+    setEditData(data)
+    setType(tipe)
+    setShow(true)
+  }
+  const toggleModal = (param) =>{
+    setShow(param)
+  }
   const detailData = (id) => {
     console.log(id);
   };
@@ -45,7 +60,6 @@ function ListBarang() {
         swal.fire("Failed to Delete!", "Error :" + err, "error");
       });
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -60,11 +74,20 @@ function ListBarang() {
           <Button
             className="float-end"
             variant="primary"
-            onClick={() => createModal.current.handleShow("create")}
+            onClick={() => createModal("create")}
           >
             Tambah Data
           </Button>
-          <FormBarang ref={createModal} refresh={fetchData} />
+          <Modal show={show}>
+            <Modal.Header closeButton onClick={() => setShow(false)}>
+              <Modal.Title>
+                {type === "create" ? "Tambah" : "Edit"} Data Barang
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <FormBarang refresh={fetchData} modal={()=>toggleModal()} type={type} data={editData}/>
+            </Modal.Body>
+          </Modal>
         </Col>
       </Row>
       <Table striped bordered hover size="md">
@@ -100,18 +123,20 @@ function ListBarang() {
                 </td>
                 <td>
                   <div className="float-end">
-                  <BsFillPencilFill
-                  className = "mx-1"
-                    color="green"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => createModal.current.handleShow("edit",items.id)}
-                  />
-                  <BsXCircleFill
-                  className = "mx-1"
-                    color="red"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => deleteData(items.id)}
-                  />
+                    <BsFillPencilFill
+                      className="mx-1"
+                      color="green"
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        editModal("edit", items)
+                      }
+                    />
+                    <BsXCircleFill
+                      className="mx-1"
+                      color="red"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => deleteData(items.id)}
+                    />
                   </div>
                 </td>
               </tr>
