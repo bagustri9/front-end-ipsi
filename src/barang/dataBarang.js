@@ -1,43 +1,44 @@
 import Card from 'react-bootstrap/Card'
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap"
 import Button from 'react-bootstrap/Button'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import Carousel from 'react-bootstrap/Carousel'
 
 let dummy = [
     {
         location: "./img/Sony A7 Mark IId.jpg",
         name: "Sony A7 Mark IId",
         info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
-        kuantitas: 4,
+        kuantitas: 3,
+        hargaSewa: 120000
+    },
+    {
+        location: "./img/Sony A7 Mark IIa.jpg",
+        name: "Sony A7 Mark IId",
+        info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
+        kuantitas: 1,
+        hargaSewa: 90000
+    },
+    {
+        location: "./img/Sony A7 Mark IIb.jpg",
+        name: "Sony A7 Mark IId",
+        info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
+        kuantitas: 3,
         hargaSewa: 100000
+    },
+    {
+        location: "./img/Sony A7 Mark IIc.jpg",
+        name: "Sony A7 Mark IId",
+        info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
+        kuantitas: 1,
+        hargaSewa: 150000
     },
     {
         location: "./img/Sony A7 Mark IId.jpg",
         name: "Sony A7 Mark IId",
         info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
-        kuantitas: 4,
-        hargaSewa: 100000
-    },
-    {
-        location: "./img/Sony A7 Mark IId.jpg",
-        name: "Sony A7 Mark IId",
-        info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
-        kuantitas: 4,
-        hargaSewa: 100000
-    },
-    {
-        location: "./img/Sony A7 Mark IId.jpg",
-        name: "Sony A7 Mark IId",
-        info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
-        kuantitas: 4,
-        hargaSewa: 100000
-    },
-    {
-        location: "./img/Sony A7 Mark IId.jpg",
-        name: "Sony A7 Mark IId",
-        info: `Fullframe sensor, Lensa Kit, Memori 16gb, Baterai, Tas, Strap`,
-        kuantitas: 4,
-        hargaSewa: 100000
+        kuantitas: 2,
+        hargaSewa: 60000
     },
 ]
 
@@ -64,7 +65,7 @@ function CardData(props) {
                                 <Button variant="secondary">Booking</Button>
                             </Card.Link>
                             <Card.Link href="#">
-                            <Button variant="primary">Rental</Button>
+                            <Button variant="primary">+</Button>
                             </Card.Link>
                         </Card.Body>
                     </Card>
