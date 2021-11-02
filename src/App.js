@@ -1,9 +1,9 @@
-import React from 'react';
-import Header from './components/Headers/Header';
-import CardData from './barang/dataBarang';
-import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ListBarang from "./barang/ListBarang";
+import React from 'react'
+import CardData from './barang/dataBarang'
+import Lokasi from './tentang/lokasi'
+import "./App.css"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import ListBarang from "./barang/ListBarang"
 
 function App() {
   return (
@@ -18,6 +18,9 @@ function App() {
             </Route>
             <Route exact path="/barang">
               <ListBarang />
+            </Route>
+            <Route exact path="/lokasi">
+              <Lokasi />
             </Route>
           </Switch>
       </div>
