@@ -47,7 +47,7 @@ function FormBarang({ refresh, type, modal, data }) {
     fd.append("kuantitas", input.kuantitas);
     fd.append("harga_rental", input.harga_rental);
     fd.append("deskripsi", input.deskripsi);
-    if(gambar){
+    if (gambar) {
       fd.append("gambar", gambar[0]);
     }
     api.post("/barang/" + data.id + "/update", fd, config).then((res) => {
