@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import api from "../api.js";
 import { Form, Button, Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 function FormBarang({ refresh, type, modal, data }) {
+  let fd = new FormData();
+  const [gambar, setGambar] = useState();
   const MySwal = withReactContent(Swal);
   const {
     register,
@@ -12,8 +15,19 @@ function FormBarang({ refresh, type, modal, data }) {
     formState: { errors },
     reset,
   } = useForm();
-  const simpan = (data) => {
-    api.post("/barang", data).then((res) => {
+  const config = {
+    headers: { "content-type": "multipart/form-data" },
+  };
+
+  const simpan = (input) => {
+    fd.append("nama_barang", input.nama_barang)
+    fd.append("tipe_barang", input.tipe_barang)
+    fd.append("kuantitas", input.kuantitas)
+    fd.append("harga_rental", input.harga_rental)
+    fd.append("deskripsi", input.deskripsi)
+    fd.append("gambar", gambar[0])
+    api.post("/barang", fd,config).then((res) => {
+      console.log(res);
       modal(false);
       MySwal.fire({
         title: <strong>Sukses !</strong>,
@@ -24,6 +38,10 @@ function FormBarang({ refresh, type, modal, data }) {
       refresh();
     });
   };
+  function handlePicInput(event) {
+    let images = event.target.files;
+    setGambar(images);
+  }
   const edit = (bahan) => {
     api.put("/barang/" + data.id + "/update", bahan).then((res) => {
       modal(false);
@@ -118,24 +136,22 @@ function FormBarang({ refresh, type, modal, data }) {
           <Form.Label>Gambar</Form.Label>
           <Form.Control
             {...register("gambar", { required: true })}
-            name="gambar"
-            defaultValue={data.gambar}
-            //   type="file"
-            //   accept="image/png, image/jpeg"
-            //   id="formFileMultiple"
-            //   multiple
+            type="file"
+            accept="image/png, image/jpeg"
+            multiple
+            onChange={handlePicInput}
           />
           {errors.gambar?.type === "required" && (
             <Form.Text className="text-danger">Gambar is required</Form.Text>
           )}
         </Form.Group>
         <Modal.Footer>
-        <Button variant="secondary" onClick={() => modal(false)}>
-          Close Modal
-        </Button>
-        <Button type="submit" className="btn btn-primary">
-          Save changes
-        </Button>
+          <Button variant="secondary" onClick={() => modal(false)}>
+            Close Modal
+          </Button>
+          <Button type="submit" className="btn btn-primary">
+            Save changes
+          </Button>
         </Modal.Footer>
       </Form>
     </div>
