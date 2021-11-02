@@ -83,12 +83,21 @@ function FormBarang({ refresh, type, modal, data }) {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Tipe Barang</Form.Label>
-          <Form.Control
+            <Form.Select {...register("tipe_barang", { required: true })}
+            defaultValue={type==="create" ? "Tipe Barang" : data.tipe_barang}>
+              <option disabled>Tipe Barang</option>
+              <option value="Kamera">Kamera</option>
+              <option value="Lighting">Lighting</option>
+              <option value="Audio">Audio</option>
+              <option value="Tripod">Tripod</option>
+              <option value="Lensa">Lensa</option>
+          </Form.Select>
+          {/* <Form.Control
             {...register("tipe_barang", { required: true })}
             type="text"
             placeholder="Tipe Barang"
             defaultValue={data.tipe_barang}
-          />
+          /> */}
           {errors.tipe_barang?.type === "required" && (
             <Form.Text className="text-danger">
               {" "}
