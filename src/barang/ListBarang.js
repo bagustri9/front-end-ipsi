@@ -13,7 +13,7 @@ function ListBarang() {
   const [editData, setEditData] = useState();
   const swal = withReactContent(Swal);
   const fetchData = async () => {
-    let request = await api.get("/barang");
+    let request = await api.get("api/barang");
     setDatas(request.data);
   };
   const createModal = (tipe) =>{
@@ -45,7 +45,7 @@ function ListBarang() {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          api.get("/barang/" + id + "/delete").then(() => {
+          api.get("api/barang/" + id + "/delete").then(() => {
             swal
               .fire("Deleted!", "Data berhasil dihapus!", "success")
               .then(() => {
