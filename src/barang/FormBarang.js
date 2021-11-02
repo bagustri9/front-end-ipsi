@@ -7,6 +7,7 @@ import withReactContent from "sweetalert2-react-content";
 
 function FormBarang({ refresh, type, modal, data }) {
   let fd = new FormData();
+  const isRequired = type === "create" ? true : false;
   const [gambar, setGambar] = useState();
   const MySwal = withReactContent(Swal);
   const {
@@ -18,16 +19,18 @@ function FormBarang({ refresh, type, modal, data }) {
   const config = {
     headers: { "content-type": "multipart/form-data" },
   };
-
+  function handlePicInput(event) {
+    let images = event.target.files;
+    setGambar(images);
+  }
   const simpan = (input) => {
-    fd.append("nama_barang", input.nama_barang)
-    fd.append("tipe_barang", input.tipe_barang)
-    fd.append("kuantitas", input.kuantitas)
-    fd.append("harga_rental", input.harga_rental)
-    fd.append("deskripsi", input.deskripsi)
-    fd.append("gambar", gambar[0])
-    api.post("/barang", fd,config).then((res) => {
-      console.log(res);
+    fd.append("nama_barang", input.nama_barang);
+    fd.append("tipe_barang", input.tipe_barang);
+    fd.append("kuantitas", input.kuantitas);
+    fd.append("harga_rental", input.harga_rental);
+    fd.append("deskripsi", input.deskripsi);
+    fd.append("gambar", gambar[0]);
+    api.post("/barang", fd, config).then((res) => {
       modal(false);
       MySwal.fire({
         title: <strong>Sukses !</strong>,
@@ -38,12 +41,16 @@ function FormBarang({ refresh, type, modal, data }) {
       refresh();
     });
   };
-  function handlePicInput(event) {
-    let images = event.target.files;
-    setGambar(images);
-  }
-  const edit = (bahan) => {
-    api.put("/barang/" + data.id + "/update", bahan).then((res) => {
+  const edit = (input) => {
+    fd.append("nama_barang", input.nama_barang);
+    fd.append("tipe_barang", input.tipe_barang);
+    fd.append("kuantitas", input.kuantitas);
+    fd.append("harga_rental", input.harga_rental);
+    fd.append("deskripsi", input.deskripsi);
+    if(gambar){
+      fd.append("gambar", gambar[0]);
+    }
+    api.post("/barang/" + data.id + "/update", fd, config).then((res) => {
       modal(false);
       MySwal.fire({
         title: <strong>Sukses !</strong>,
@@ -135,12 +142,19 @@ function FormBarang({ refresh, type, modal, data }) {
         <Form.Group className="mb-3">
           <Form.Label>Gambar</Form.Label>
           <Form.Control
-            {...register("gambar", { required: true })}
+            {...register("gambar", { required: isRequired })}
             type="file"
             accept="image/png, image/jpeg"
             multiple
             onChange={handlePicInput}
           />
+          {type !== "create" ? (
+            <Form.Text muted>
+              Kosongkan jika tidak ingin mengubah gambar
+            </Form.Text>
+          ) : (
+            ""
+          )}
           {errors.gambar?.type === "required" && (
             <Form.Text className="text-danger">Gambar is required</Form.Text>
           )}
