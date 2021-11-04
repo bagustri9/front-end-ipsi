@@ -9,7 +9,7 @@ import Carousel from 'react-bootstrap/Carousel'
 function CardData(props) {
     const [datas, setDatas] = useState([]);
     const fetchData = async () => {
-      let request = await api.get("/barang");
+      let request = await api.get("api/barang");
       setDatas(request.data);
     };
     useEffect(() => {

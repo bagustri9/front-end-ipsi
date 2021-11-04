@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import Header from './components/Headers/Header';
 import CardData from './barang/dataBarang';
+import Lokasi from './tentang/lokasi';
+import Faq from './tentang/faq';
+import Judul from './menubar/judul';
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ListBarang from "./barang/ListBarang";
@@ -23,6 +25,14 @@ function App() {
             </Route>
             <Route exact path="/register">
               <Register />
+            </Route>
+            <Route exact path="/lokasi">
+              <Judul title="Lokasi Rental" info="Temukan lokasi rental terdekat!" />
+              <Lokasi />
+            </Route>
+            <Route exact path="/faq">
+              <Judul title="Frequently Asked Questions" info="Cari tahu apa yang ingin kamu tanyakan!" />
+              <Faq />
             </Route>
           </Switch>
       </div>
