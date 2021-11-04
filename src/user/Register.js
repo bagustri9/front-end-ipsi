@@ -61,7 +61,7 @@ function Register() {
                     {...register("username", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Username
                   </label>
                 </div>
@@ -71,7 +71,7 @@ function Register() {
                     {...register("email", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Email
                   </label>
                 </div>
@@ -81,7 +81,7 @@ function Register() {
                     {...register("password", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Password
                   </label>
                 </div>
@@ -91,7 +91,7 @@ function Register() {
                     {...register("password_confirmation", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Confirm Password
                   </label>
                 </div>
@@ -101,7 +101,7 @@ function Register() {
                     {...register("nama_lengkap", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Nama Lengkap
                   </label>
                 </div>
@@ -111,7 +111,7 @@ function Register() {
                     {...register("phone", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Phone
                   </label>
                 </div>
@@ -121,7 +121,7 @@ function Register() {
                     {...register("alamat", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Alamat
                   </label>
                 </div>
@@ -131,7 +131,7 @@ function Register() {
                     {...register("gender", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Gender
                   </label>
                 </div>
@@ -141,7 +141,7 @@ function Register() {
                     {...register("tanggal_hahir", { required: true })}
                     className="form-control"
                   />
-                  <label className="form-label" for="form3Example1q">
+                  <label className="form-label" htmlFor="form3Example1q">
                     Tanggal Lahir
                   </label>
                 </div>
