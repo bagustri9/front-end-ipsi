@@ -1,10 +1,11 @@
 import {NavLink} from 'react-router-dom'
 import Logo from '../assets/img/logo.png'
+import {BsFillCameraFill, BsFillBagCheckFill, BsPeopleFill, BsFillFolderFill} from "react-icons/bs";
 
 const SideNav = () => {
   return (
     <ul
-      className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      className="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion"
       id="accordionSidebar">
 
       <a
@@ -19,9 +20,14 @@ const SideNav = () => {
       </a>
 
       <li className="nav-item active">
-        <a className="nav-link" href="index.html">
-          <i className="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span>
+        <a className="nav-link" 
+          href="index.html"
+          data-toggle="collapse"
+          data-target="#collapseTwo"
+          aria-expanded="true"
+          aria-controls="collapseTwo">
+          <BsFillFolderFill/>
+          <span style={{marginLeft: "10px"}}>Dashboard</span>
         </a>
       </li>
 
@@ -33,8 +39,8 @@ const SideNav = () => {
           data-target="#collapseTwo"
           aria-expanded="true"
           aria-controls="collapseTwo">
-          <i className="fas fa-fw fa-cog"></i>
-          <span>Barang Rental</span>
+          <BsFillCameraFill/>
+          <span style={{marginLeft: "10px"}}>Barang Rental</span>
         </a>
         <div
           id="collapseTwo"
@@ -60,8 +66,8 @@ const SideNav = () => {
           data-target="#collapseUtilities"
           aria-expanded="true"
           aria-controls="collapseUtilities">
-          <i className="fas fa-fw fa-wrench"></i>
-          <span>Transaksi Rental</span>
+          <BsFillBagCheckFill/>
+          <span style={{marginLeft: "10px"}}>Transaksi Rental</span>
         </a>
         <div
           id="collapseUtilities"
@@ -93,8 +99,8 @@ const SideNav = () => {
           data-target="#collapsePages"
           aria-expanded="true"
           aria-controls="collapsePages">
-          <i className="fas fa-fw fa-folder"></i>
-          <span>Tentang</span>
+          <BsPeopleFill/>
+          <span style={{marginLeft:"10px"}}>Tentang</span>
         </a>
         <div
           id="collapsePages"
@@ -108,17 +114,9 @@ const SideNav = () => {
             <NavLink activeClassName="active" className="collapse-item" to="/lokasi">
               Lokasi Rental
             </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/kontak">
-              Informasi Kontak
-            </NavLink>
           </div>
         </div>
       </li>
-
-      <div className="text-center d-none d-md-inline">
-        <button className="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
     </ul>
   )
 }
