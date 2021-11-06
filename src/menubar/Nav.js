@@ -15,7 +15,6 @@ function Nav() {
 
       {/* Topbar Navbar */}
       <ul className="navbar-nav ml-auto">
-
         {/* Nav Item - Search Dropdown (Visible Only XS) */}
         <li className="nav-item dropdown no-arrow d-sm-none">
           <a

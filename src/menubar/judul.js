@@ -1,7 +1,7 @@
 const judulFungsi = (props) => {
     return (
         <div>
-            <p class="fs-2 mb-0">{props.title}</p>
+            <h1 class="h3 mb-0 text-gray-800">{props.title}</h1>
             <p class="fs-6 text-muted mt-0">{props.info}</p>
         </div>
     )

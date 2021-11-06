@@ -5,48 +5,48 @@ import {BsFillCameraFill, BsFillBagCheckFill, BsPeopleFill, BsFillFolderFill} fr
 const SideNav = () => {
   return (
     <ul
-      className="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion"
-      id="accordionSidebar">
-
-      <a
-        className="sidebar-brand d-flex align-items-center justify-content-center"
-        href="index.html">
+      className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      id="accordionSidebar"
+    >
+      <NavLink
+        exact
+        className="sidebar-brand d-flex align-items-center justify-content-center my-3"
+        to="/"
+      >
         <img
           src={Logo}
           style={{
-          width: "150px",
-          objectFit: "cover"
-        }}/>
-      </a>
+            width: "150px",
+            objectFit: "cover",
+          }}
+        />
+      </NavLink>
 
       <li className="nav-item active">
         <a className="nav-link" 
-          href="index.html"
-          data-toggle="collapse"
-          data-target="#collapseTwo"
-          aria-expanded="true"
-          aria-controls="collapseTwo">
+          href="index.html">
           <BsFillFolderFill/>
           <span style={{marginLeft: "10px"}}>Dashboard</span>
         </a>
       </li>
-
       <li className="nav-item">
         <a
           className="nav-link collapsed"
-          href="#"
           data-toggle="collapse"
+          href="#"
           data-target="#collapseTwo"
           aria-expanded="true"
           aria-controls="collapseTwo">
           <BsFillCameraFill/>
           <span style={{marginLeft: "10px"}}>Barang Rental</span>
         </a>
+
         <div
           id="collapseTwo"
           className="collapse"
           aria-labelledby="headingTwo"
-          data-parent="#accordionSidebar">
+          data-parent="#accordionSidebar"
+        >
           <div className="bg-white py-2 collapse-inner rounded">
             <NavLink activeClassName="active" className="collapse-item" to="/daftarBarang">
               Data Barang Rental
@@ -57,12 +57,11 @@ const SideNav = () => {
           </div>
         </div>
       </li>
-
       <li className="nav-item">
         <a
           className="nav-link collapsed"
-          href="#"
           data-toggle="collapse"
+          href="#"
           data-target="#collapseUtilities"
           aria-expanded="true"
           aria-controls="collapseUtilities">
@@ -73,7 +72,8 @@ const SideNav = () => {
           id="collapseUtilities"
           className="collapse"
           aria-labelledby="headingUtilities"
-          data-parent="#accordionSidebar">
+          data-parent="#accordionSidebar"
+        >
           <div className="bg-white py-2 collapse-inner rounded">
             <NavLink activeClassName="active" className="collapse-item" to="/faq">
               Peminjaman Barang
@@ -90,12 +90,11 @@ const SideNav = () => {
           </div>
         </div>
       </li>
-
       <li className="nav-item">
         <a
           className="nav-link collapsed"
-          href="#"
           data-toggle="collapse"
+          href="#"
           data-target="#collapsePages"
           aria-expanded="true"
           aria-controls="collapsePages">
@@ -106,7 +105,8 @@ const SideNav = () => {
           id="collapsePages"
           className="collapse"
           aria-labelledby="headingPages"
-          data-parent="#accordionSidebar">
+          data-parent="#accordionSidebar"
+        >
           <div className="bg-white py-2 collapse-inner rounded">
             <NavLink activeClassName="active" className="collapse-item" to="/faq">
               FAQ
@@ -118,7 +118,7 @@ const SideNav = () => {
         </div>
       </li>
     </ul>
-  )
-}
+  );
+};
 
-export default SideNav
+export default SideNav;
