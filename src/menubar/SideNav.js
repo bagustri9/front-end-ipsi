@@ -1,61 +1,70 @@
-import {NavLink} from 'react-router-dom' 
-import Logo from '../assets/img/logo.png'
+import { NavLink } from "react-router-dom";
+import Logo from "../assets/img/logo.png";
 
 const SideNav = () => {
   return (
     <ul
       className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-      id="accordionSidebar">
-
-      <a
-        className="sidebar-brand d-flex align-items-center justify-content-center"
-        href="index.html">
+      id="accordionSidebar"
+    >
+      <NavLink
+        exact
+        className="sidebar-brand d-flex align-items-center justify-content-center my-3"
+        to="/"
+      >
         <img
           src={Logo}
           style={{
-          width: "150px",
-          objectFit: "cover"
-        }}/>
-      </a>
+            width: "150px",
+            objectFit: "cover",
+          }}
+        />
+      </NavLink>
 
-      <li className="nav-item active">
-        <a className="nav-link" href="index.html">
+      <li className="nav-item mt-1">
+        <NavLink className="nav-link" exact to="/">
           <i className="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
-        </a>
+        </NavLink>
       </li>
-
       <li className="nav-item">
         <a
           className="nav-link collapsed"
-          href="#"
           data-toggle="collapse"
+          href="#"
           data-target="#collapseTwo"
           aria-expanded="true"
-          aria-controls="collapseTwo">
+          aria-controls="collapseTwo"
+        >
           <i className="fas fa-fw fa-cog"></i>
           <span>Barang Rental</span>
         </a>
+
         <div
           id="collapseTwo"
           className="collapse"
           aria-labelledby="headingTwo"
-          data-parent="#accordionSidebar">
+          data-parent="#accordionSidebar"
+        >
           <div className="bg-white py-2 collapse-inner rounded">
-            <a className="collapse-item" href="buttons.html">Data Barang Rental</a>
-            <a className="collapse-item" href="cards.html">Jadwal Peminjaman</a>
+            <NavLink className="collapse-item" exact to="/daftarBarang">
+              Data Barang Rental
+            </NavLink>
+            <NavLink className="collapse-item" exact to="/">
+              Jadwal Peminjaman
+            </NavLink>
           </div>
         </div>
       </li>
-
       <li className="nav-item">
         <a
           className="nav-link collapsed"
-          href="#"
           data-toggle="collapse"
+          href="#"
           data-target="#collapseUtilities"
           aria-expanded="true"
-          aria-controls="collapseUtilities">
+          aria-controls="collapseUtilities"
+        >
           <i className="fas fa-fw fa-wrench"></i>
           <span>Transaksi Rental</span>
         </a>
@@ -63,24 +72,33 @@ const SideNav = () => {
           id="collapseUtilities"
           className="collapse"
           aria-labelledby="headingUtilities"
-          data-parent="#accordionSidebar">
+          data-parent="#accordionSidebar"
+        >
           <div className="bg-white py-2 collapse-inner rounded">
-            <a className="collapse-item" href="utilities-color.html">Peminjaman Barang</a>
-            <a className="collapse-item" href="utilities-border.html">Pembayaran Barang</a>
-            <a className="collapse-item" href="utilities-animation.html">Pengembalian Barang</a>
-            <a className="collapse-item" href="utilities-other.html">Riwayat Peminjaman</a>
+            <NavLink to="/" exact className="collapse-item">
+              Peminjaman Barang
+            </NavLink>
+            <NavLink to="/" exact className="collapse-item">
+              Pembayaran Barang
+            </NavLink>
+            <NavLink to="/" exact className="collapse-item">
+              Pengembalian Barang
+            </NavLink>
+            <NavLink to="/" exact className="collapse-item">
+              Riwayat Peminjaman
+            </NavLink>
           </div>
         </div>
       </li>
-
       <li className="nav-item">
         <a
           className="nav-link collapsed"
-          href="#"
           data-toggle="collapse"
+          href="#"
           data-target="#collapsePages"
           aria-expanded="true"
-          aria-controls="collapsePages">
+          aria-controls="collapsePages"
+        >
           <i className="fas fa-fw fa-folder"></i>
           <span>Tentang</span>
         </a>
@@ -88,27 +106,38 @@ const SideNav = () => {
           id="collapsePages"
           className="collapse"
           aria-labelledby="headingPages"
-          data-parent="#accordionSidebar">
+          data-parent="#accordionSidebar"
+        >
           <div className="bg-white py-2 collapse-inner rounded">
-            <NavLink activeClassName="active" className="collapse-item" to="/faq">
-                FAQ
+            <NavLink
+              exact
+              activeClassName="active"
+              className="collapse-item"
+              to="/faq"
+            >
+              FAQ
             </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/lokasi">
-                Lokasi Rental
+            <NavLink
+              exact
+              activeClassName="active"
+              className="collapse-item"
+              to="/lokasi"
+            >
+              Lokasi Rental
             </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/kontak">
-                Informasi Kontak
+            <NavLink
+              exact
+              activeClassName="active"
+              className="collapse-item"
+              to="/kontak"
+            >
+              Informasi Kontak
             </NavLink>
           </div>
         </div>
       </li>
-
-      <div className="text-center d-none d-md-inline">
-        <button className="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
     </ul>
-  )
-}
+  );
+};
 
-export default SideNav
+export default SideNav;

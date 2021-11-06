@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import api from "../api.js";
 import FormBarang from "./FormBarang.js";
 import { Col, Table, Row, Button, Modal } from "react-bootstrap";
@@ -16,19 +16,19 @@ function ListBarang() {
     let request = await api.get("api/barang");
     setDatas(request.data);
   };
-  const createModal = (tipe) =>{
-    setType(tipe)
-    setShow(true)
-    setEditData([])
-  }
-  const editModal = (tipe,data) =>{
-    setEditData(data)
-    setType(tipe)
-    setShow(true)
-  }
-  const toggleModal = (param) =>{
-    setShow(param)
-  }
+  const createModal = (tipe) => {
+    setType(tipe);
+    setShow(true);
+    setEditData([]);
+  };
+  const editModal = (tipe, data) => {
+    setEditData(data);
+    setType(tipe);
+    setShow(true);
+  };
+  const toggleModal = (param) => {
+    setShow(param);
+  };
   const detailData = (id) => {
     console.log(id);
   };
@@ -65,30 +65,32 @@ function ListBarang() {
   }, []);
 
   return (
-    <Col sm={8} className="mx-auto">
+    <Col sm={8} className="mx-auto card shadow mb-4">
       <Row className="mt-4 mb-3">
-        <Col sm={8}>
-          <h3>List Barang</h3>
-        </Col>
-        <Col sm={4}>
+        <Col sm={{ span: 3, offset: 9 }}>
           <Button
-            className="float-end"
+            className="col-12"
             variant="primary"
             onClick={() => createModal("create")}
           >
             Tambah Data
           </Button>
-          <Modal show={show}>
-            <Modal.Header closeButton onClick={() => setShow(false)}>
-              <Modal.Title>
-                {type === "create" ? "Tambah" : "Edit"} Data Barang
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <FormBarang refresh={fetchData} modal={()=>toggleModal()} type={type} data={editData}/>
-            </Modal.Body>
-          </Modal>
         </Col>
+        <Modal show={show}>
+          <Modal.Header closeButton onClick={() => setShow(false)}>
+            <Modal.Title>
+              {type === "create" ? "Tambah" : "Edit"} Data Barang
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FormBarang
+              refresh={fetchData}
+              modal={() => toggleModal()}
+              type={type}
+              data={editData}
+            />
+          </Modal.Body>
+        </Modal>
       </Row>
       <Table striped bordered hover size="md">
         <thead>
@@ -134,9 +136,7 @@ function ListBarang() {
                       className="mx-1"
                       color="green"
                       style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        editModal("edit", items)
-                      }
+                      onClick={() => editModal("edit", items)}
                     />
                     <BsXCircleFill
                       className="mx-1"

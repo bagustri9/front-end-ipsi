@@ -39,7 +39,7 @@ function CardData(props) {
       </Form.Select>
       <Row xs={1} md={4} className="g-4">
         {datas.map((barang, idx) => (
-          <Col>
+          <Col key={idx}>
             <Card>
               <Carousel>
               {barang.gambar.map((gambar, idx) => (
