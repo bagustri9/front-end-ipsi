@@ -29,9 +29,12 @@ function FormBarang({ refresh, type, modal, data }) {
     fd.append("kuantitas", input.kuantitas);
     fd.append("harga_rental", input.harga_rental);
     fd.append("deskripsi", input.deskripsi);
-    fd.append("gambar", gambar[0]);
+    for(var i = 0; i<gambar.length;i++){
+      fd.append("gambar[]", gambar[i]);
+    }
     api.post("api/barang", fd, config).then((res) => {
-      modal(false);
+      console.log(res)
+      modal(false)
       MySwal.fire({
         title: <strong>Sukses !</strong>,
         html: <i>Data Berhasil Ditambah !</i>,
@@ -48,7 +51,9 @@ function FormBarang({ refresh, type, modal, data }) {
     fd.append("harga_rental", input.harga_rental);
     fd.append("deskripsi", input.deskripsi);
     if (gambar) {
-      fd.append("gambar", gambar[0]);
+      for(var i = 0; i<gambar.length;i++){
+        fd.append("gambar[]", gambar[i]);
+      }
     }
     api.post("api/barang/" + data.id + "/update", fd, config).then((res) => {
       modal(false);

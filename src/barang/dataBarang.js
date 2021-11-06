@@ -1,42 +1,38 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import api from "../api.js";
-import Card from 'react-bootstrap/Card'
-import {Col, Container, Row} from "react-bootstrap"
-import Button from 'react-bootstrap/Button'
-import {ListGroup, ListGroupItem} from 'react-bootstrap'
-import Form from 'react-bootstrap/Form'
-import Carousel from 'react-bootstrap/Carousel'
+import Card from "react-bootstrap/Card";
+import { Col, Container, Row } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Carousel from "react-bootstrap/Carousel";
 
 function CardData(props) {
-  const [datas,
-    setDatas] = useState([])
-  const fetchData = async() => {
-      if(idFilter.length === 0) {
-          let request = await api.get("api/barang");
-          setDatas(request.data)
-      } else  {
-        let result = await api.get(`api/barang/${idFilter}/filter`)
-        setDatas(result.data)      
-      }
+  const [datas, setDatas] = useState([]);
+  const fetchData = async (id) => {
+    console.log(id)
+    if (id === undefined) {
+      let request = await api.get("api/barang");
+      setDatas(request.data);
+    } else {
+      let result = await api.get(`api/barang/${id}/filter`);
+      setDatas(result.data);
+    }
   };
-  const [idFilter,
-    setFilter] = useState([])
+
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-const filter = (e) => {
-    setFilter(e.target.value)
-    console.log(idFilter)
-    fetchData()
-}
+  const filter = (event) => {
+    let value = event.target.value;
+    fetchData(value)
+  };
 
-//   console.log(datas);
   return (
     <Container>
-      <Form.Select aria-label="Default select example"
-        onSelect={filter}
-      >
+      <Form.Select onChange={filter} defaultValue="Pilih Filter">
+        <option disabled> Pilih Filter </option>
         <option value="0">One</option>
         <option value="1">Two</option>
         <option value="2">Three</option>
@@ -45,17 +41,28 @@ const filter = (e) => {
         {datas.map((barang, idx) => (
           <Col>
             <Card>
-              <Card.Img variant="top" src={barang.gambar}/>
+              <Carousel>
+              {barang.gambar.map((gambar, idx) => (
+                <Carousel.Item>
+                  <img key={idx}
+                    className="d-block w-100 h-50"
+                    src={gambar.url}
+                  />
+                </Carousel.Item>
+              ))}
+              </Carousel>
               <Card.Body>
                 <Card.Title>{barang.nama_barang}</Card.Title>
-                <Card.Text>
-                  {barang.deskripsi}
-                </Card.Text>
+                <Card.Text>{barang.deskripsi}</Card.Text>
               </Card.Body>
               <ListGroup className="list-group-flush">
-                <ListGroupItem>Tersedia : {barang.kuantitas}
-                  unit</ListGroupItem>
-                <ListGroupItem>Harga sewa : {barang.harga_rental}</ListGroupItem>
+                <ListGroupItem>
+                  Tersedia : {barang.kuantitas}
+                  unit
+                </ListGroupItem>
+                <ListGroupItem>
+                  Harga sewa : {barang.harga_rental}
+                </ListGroupItem>
               </ListGroup>
               <Card.Body>
                 <Card.Link href="#">
@@ -70,7 +77,7 @@ const filter = (e) => {
         ))}
       </Row>
     </Container>
-  )
+  );
 }
 
 export default CardData;

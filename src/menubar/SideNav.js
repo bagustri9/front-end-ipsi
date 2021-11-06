@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom' 
+import {NavLink} from 'react-router-dom' 
 import Logo from '../assets/img/logo.png'
 
 const SideNav = () => {
@@ -90,15 +90,15 @@ const SideNav = () => {
           aria-labelledby="headingPages"
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
-            <Link className="collapse-item" to="/faq">
+            <NavLink activeClassName="active" className="collapse-item" to="/faq">
                 FAQ
-            </Link>
-            <Link className="collapse-item" to="/lokasi">
+            </NavLink>
+            <NavLink activeClassName="active" className="collapse-item" to="/lokasi">
                 Lokasi Rental
-            </Link>
-            <Link className="collapse-item" to="/kontak">
+            </NavLink>
+            <NavLink activeClassName="active" className="collapse-item" to="/kontak">
                 Informasi Kontak
-            </Link>
+            </NavLink>
           </div>
         </div>
       </li>
