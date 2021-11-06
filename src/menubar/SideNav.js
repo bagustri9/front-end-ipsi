@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom' 
+import {NavLink} from 'react-router-dom'
 import Logo from '../assets/img/logo.png'
 
 const SideNav = () => {
@@ -42,8 +42,12 @@ const SideNav = () => {
           aria-labelledby="headingTwo"
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
-            <a className="collapse-item" href="buttons.html">Data Barang Rental</a>
-            <a className="collapse-item" href="cards.html">Jadwal Peminjaman</a>
+            <NavLink activeClassName="active" className="collapse-item" to="/daftarBarang">
+              Data Barang Rental
+            </NavLink>
+            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+              Jadwal Peminjaman
+            </NavLink>
           </div>
         </div>
       </li>
@@ -65,10 +69,18 @@ const SideNav = () => {
           aria-labelledby="headingUtilities"
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
-            <a className="collapse-item" href="utilities-color.html">Peminjaman Barang</a>
-            <a className="collapse-item" href="utilities-border.html">Pembayaran Barang</a>
-            <a className="collapse-item" href="utilities-animation.html">Pengembalian Barang</a>
-            <a className="collapse-item" href="utilities-other.html">Riwayat Peminjaman</a>
+            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+              Peminjaman Barang
+            </NavLink>
+            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+              Pembayaran Barang
+            </NavLink>
+            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+              Pengembalian Barang
+            </NavLink>
+            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+              Riwayat Peminjaman
+            </NavLink>
           </div>
         </div>
       </li>
@@ -91,13 +103,13 @@ const SideNav = () => {
           data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
             <NavLink activeClassName="active" className="collapse-item" to="/faq">
-                FAQ
+              FAQ
             </NavLink>
             <NavLink activeClassName="active" className="collapse-item" to="/lokasi">
-                Lokasi Rental
+              Lokasi Rental
             </NavLink>
             <NavLink activeClassName="active" className="collapse-item" to="/kontak">
-                Informasi Kontak
+              Informasi Kontak
             </NavLink>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Container from 'react-bootstrap/Container'
 import Accordion from 'react-bootstrap/Accordion'
+import Card from 'react-bootstrap/Card'
 
 const faQ = () => {
     return (
