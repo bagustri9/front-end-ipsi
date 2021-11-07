@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar'
 import axios from 'axios';
 import CardData from './barang/dataBarang';
 import Lokasi from './tentang/lokasi';
@@ -7,11 +6,13 @@ import Faq from './tentang/faq';
 import Judul from './menubar/judul';
 import Nav from './menubar/Nav';
 import SideNav from './menubar/SideNav';
-import NavProfile from './menubar/NavProfile';
+import History from './transaksi/History';
 import "./App.css";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import ListBarang from "./barang/ListBarang";
+import Login from "./user/Login";
 import Register from "./user/Register";
+import CartAction from "./components/CartAction"
 
 axios.defaults.withCredentials = true;
 
@@ -29,9 +30,9 @@ function App() {
                   <Switch>
                     <Route exact path="/">
                       <h1>Hello</h1>
+                      <CartAction/>
                     </Route>
                     <Route exact path="/dashboard">
-                      <NavProfile/>
                     </Route>
                     <Route exact path="/daftarBarang">
                       <Judul
@@ -39,14 +40,23 @@ function App() {
                         info="Pilih barang sesuai dengan kebutuhanmu!"/>
                       <CardData/>
                     </Route>
+                    <Route exact path="/history">
+                      <Judul
+                        title="Riwayat Peminjaman Barang"
+                        info="Temukan informasi riwayat peminjamanmu!"/>
+                      <History/>
+                    </Route>
                     <Route exact path="/barang">
                       <ListBarang/>
                     </Route>
                     <Route exact path="/register">
                       <Register/>
                     </Route>
+                    <Route exact path="/login">
+                      <Login/>
+                    </Route>
                     <Route exact path="/lokasi">
-                      <Judul title="Lokasi Rental" info="Temukan lokasi rental terdekat!"/>
+                      <Judul title="Lokasi Rental" info="Temukan lokasi rental kami!"/>
                       <Lokasi/>
                     </Route>
                     <Route exact path="/faq">

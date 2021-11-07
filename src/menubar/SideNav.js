@@ -5,7 +5,7 @@ import {BsFillCameraFill, BsFillBagCheckFill, BsPeopleFill, BsFillFolderFill} fr
 const SideNav = () => {
   return (
     <ul
-      className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      className="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion"
       id="accordionSidebar"
     >
       <NavLink
@@ -84,7 +84,7 @@ const SideNav = () => {
             <NavLink activeClassName="active" className="collapse-item" to="/faq">
               Pengembalian Barang
             </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+            <NavLink activeClassName="active" className="collapse-item" to="/history">
               Riwayat Peminjaman
             </NavLink>
           </div>
