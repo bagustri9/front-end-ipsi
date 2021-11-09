@@ -7,11 +7,14 @@ import {ListGroup, ListGroupItem} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Carousel from "react-bootstrap/Carousel";
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
+import Spinner from 'react-bootstrap/Spinner'
 
 function CardData(props) {
   const [datas, setDatas] = useState([]);
+  const [isLoading, setLoading] = useState();
 
   const fetchData = async(id, value) => {
+    setLoading(true)
     if (id === 1) {
       let result = await api.get(`api/barang/${value}/filter`);
       setDatas(result.data);
@@ -22,6 +25,7 @@ function CardData(props) {
       let request = await api.get("api/barang");
       setDatas(request.data);
     }
+    setLoading(false)
   };
 
   useEffect(() => {
@@ -74,8 +78,8 @@ function CardData(props) {
         </Col>
       </Row>
       <Row xs={1} md={4} className="g-4">
-        {datas.map((barang, idx) => (
-          <Col>
+        {isLoading ? (<Spinner className="mx-auto" animation="border"/>):datas.map((barang, idx) => (
+          <Col md={3} sm={12}>
             <Card className="cardBarang">
               <Carousel>
                 {barang
