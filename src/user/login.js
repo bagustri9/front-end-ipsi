@@ -1,11 +1,8 @@
 import api from "../api.js";
 import {BrowserRouter as Router} from "react-router-dom";
 import Logo from '../assets/img/logo.png'
-import { useCookies } from 'react-cookie'
 
 function Login(props) {
-
-  const [cookies, setCookies] = useCookies(["authentication", "token"])
 
   const handleSubmit = async(e) => {
     e.preventDefault()
@@ -16,10 +13,15 @@ function Login(props) {
       email: email,
       password: passw
     }
-    let result = await api.post(`/api/login/`, data).then(res => {
-      console.log(res.data)
-      // setCookies(["authentication", res.data])
-    })
+    api.get('/sanctum/csrf-cookie')
+    .then(response => {
+        api.post(`/api/login/`, data).then(response => {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+            console.log(localStorage.getItem('token'))
+            console.log(JSON.parse(localStorage.getItem('user')))
+        })
+    });
   }
 
   return (
