@@ -1,9 +1,17 @@
-import React, {useState} from 'react';
+import api from "../api.js";
+import {useState} from "react"
 
 function Login(props) {
+
+  const [user, setUser] = useState()
+
+  const login = async () => {
+    let result = await api.post(`api/login`)
+  }
+
   return (
     <div class="container">
-
+      {console.log(props.state)}
       <div class="row justify-content-center">
 
         <div class="col-xl-10 col-lg-12 col-md-9">
@@ -38,7 +46,7 @@ function Login(props) {
                           <label class="custom-control-label" for="customCheck">Remember Me</label>
                         </div>
                       </div>
-                      <a href="index.html" class="btn btn-primary btn-user btn-block">
+                      <a onClick={props.state} class="btn btn-primary btn-user btn-block">
                         Login
                       </a>
                     </form>
@@ -47,7 +55,7 @@ function Login(props) {
                       <a class="small" href="forgot-password.html">Lupa Password?</a>
                     </div>
                     <div class="text-center">
-                      <a class="small" href="register.html">Daftar!</a>
+                      <a class="small" >Daftar!</a>
                     </div>
                   </div>
                 </div>

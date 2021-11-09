@@ -11,15 +11,12 @@ function Nav() {
       className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
       {/* Sidebar Toggle (Topbar) */}
-      <button
-        id="sidebarToggleTop"
-        className="btn btn-link rounded-circle mr-3">
+      <button id="sidebarToggleTop" className="btn btn-link rounded-circle mr-3">
         <i className="fa fa-bars"></i>
       </button>
 
       {/* Topbar Navbar */}
       <ul className="navbar-nav ml-auto">
-        
 
         {/* Nav Item - Messages */}
         <li className="nav-item dropdown no-arrow mx-1">
@@ -46,12 +43,15 @@ function Nav() {
                 <img className="rounded-circle" src="img/undraw_profile_1.svg" alt="..."/>
               </div>
               <div className="font-weight-bold">
-                <div className="text-truncate">Sony A7S Mark II BO </div>
+                <div className="text-truncate">Sony A7S Mark II BO
+                </div>
                 <div className="small text-gray-500">Kuantitas : 1</div>
               </div>
               <CartAction/>
             </div>
-            <NavLink className="dropdown-item text-center big bg-gradient-blue-100" to="/history">
+            <NavLink
+              className="dropdown-item text-center big bg-gradient-blue-100"
+              to="/history">
               Siap Rental Barang?
             </NavLink>
           </div>
@@ -106,6 +106,29 @@ function Nav() {
           </div>
         </li>
       </ul>
+      <div
+        className="modal fade"
+        id="ProfileutModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button className="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="modal-body">Select "Profileut" below if you are ready to end your current session.</div>
+            <div className="modal-footer">
+              <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a className="btn btn-primary" href="login.html">Profileut</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
   );
 }
