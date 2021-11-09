@@ -4,14 +4,15 @@ import {useState} from "react"
 import { useCookies } from 'react-cookie'
 
 const App = () => {
-  const [cookies, setCookies, removeCookies] = useCookies(["autentikasi"])
+  const [cookies, setCookies] = useCookies(["authentication"])
 
   const handleState = () => [
-    setCookies("autentikasi", 1)
+    setCookies("authentication", "1")
   ]
+  handleState()
 
   return (
-    cookies.get("autentikasi") === 0 ? <Login state={() => handleState()}/> : <Aplikasi/>
+    cookies.authentication === "0" ? <Login state={() => handleState()}/> : <Aplikasi/>
   )
 }
 
