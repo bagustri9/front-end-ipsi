@@ -48,7 +48,7 @@ const SideNav = () => {
           data-parent="#accordionSidebar"
         >
           <div className="bg-white py-2 collapse-inner rounded">
-            <NavLink activeClassName="active" className="collapse-item" to="/daftarBarang">
+            <NavLink activeClassName="active" className="collapse-item" to="/daftar-barang">
               Data Barang Rental
             </NavLink>
             <NavLink activeClassName="active" className="collapse-item" to="/faq">

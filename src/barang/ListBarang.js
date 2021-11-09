@@ -3,6 +3,7 @@ import api from "../api.js";
 import FormBarang from "./FormBarang.js";
 import { Col, Table, Row, Button, Modal } from "react-bootstrap";
 import { BsXCircleFill, BsFillPencilFill } from "react-icons/bs";
+import Spinner from 'react-bootstrap/Spinner'
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -10,11 +11,14 @@ function ListBarang() {
   const [show, setShow] = useState(false);
   const [datas, setDatas] = useState([]);
   const [type, setType] = useState();
+  const [isLoading, setLoading] = useState();
   const [editData, setEditData] = useState();
   const swal = withReactContent(Swal);
   const fetchData = async () => {
+    setLoading(true)
     let request = await api.get("api/barang");
     setDatas(request.data);
+    setLoading(false)
   };
   const createModal = (tipe) => {
     setType(tipe);
@@ -103,7 +107,7 @@ function ListBarang() {
           </tr>
         </thead>
         <tbody>
-          {datas ? (
+          {isLoading ? (<tr><td colSpan="5" align="center"><Spinner animation="border"/></td></tr>):(
             datas.map((items, i) => (
               <tr key={i}>
                 <td
@@ -148,10 +152,6 @@ function ListBarang() {
                 </td>
               </tr>
             ))
-          ) : (
-            <tr>
-              <td> Data Kosong</td>
-            </tr>
           )}
         </tbody>
       </Table>

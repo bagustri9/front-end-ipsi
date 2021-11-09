@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import CardData from './barang/dataBarang';
+import CardData from './barang/CardData';
 import Lokasi from './tentang/lokasi';
 import Faq from './tentang/faq';
 import Judul from './menubar/judul';
@@ -34,7 +34,7 @@ function App() {
                     </Route>
                     <Route exact path="/dashboard">
                     </Route>
-                    <Route exact path="/daftarBarang">
+                    <Route exact path="/daftar-barang">
                       <Judul
                         title="Data Barang Rental"
                         info="Pilih barang sesuai dengan kebutuhanmu!"/>
@@ -47,6 +47,9 @@ function App() {
                       <History/>
                     </Route>
                     <Route exact path="/barang">
+                      <Judul
+                        title="List Barang"
+                        info="Manajemen barang"/>
                       <ListBarang/>
                     </Route>
                     <Route exact path="/register">
