@@ -93,6 +93,9 @@ function CardData(props) {
                 <ListGroupItem>
                   Tersedia : {barang.kuantitas} unit
                 </ListGroupItem>
+                <ListGroupItem>
+                  Harga Sewa : {barang.harga_rental} / 24 jam
+                </ListGroupItem>
               </ListGroup>
               <Card.Body>
                 <Card.Link href="#">

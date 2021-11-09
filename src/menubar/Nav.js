@@ -49,7 +49,7 @@ function Nav() {
                 <div className="text-truncate">Sony A7S Mark II BO </div>
                 <div className="small text-gray-500">Kuantitas : 1</div>
               </div>
-              {/* <CartAction/> */}
+              <CartAction/>
             </div>
             <NavLink className="dropdown-item text-center big bg-gradient-blue-100" to="/history">
               Siap Rental Barang?
