@@ -3,9 +3,10 @@ import api from "../api.js";
 import FormBarang from "./FormBarang.js";
 import { Col, Table, Row, Button, Modal } from "react-bootstrap";
 import { BsXCircleFill, BsFillPencilFill } from "react-icons/bs";
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Judul from "../menubar/judul";
 
 function ListBarang() {
   const [show, setShow] = useState(false);
@@ -15,10 +16,10 @@ function ListBarang() {
   const [editData, setEditData] = useState();
   const swal = withReactContent(Swal);
   const fetchData = async () => {
-    setLoading(true)
+    setLoading(true);
     let request = await api.get("api/barang");
     setDatas(request.data);
-    setLoading(false)
+    setLoading(false);
   };
   const createModal = (tipe) => {
     setType(tipe);
@@ -69,93 +70,102 @@ function ListBarang() {
   }, []);
 
   return (
-    <Col sm={8} className="mx-auto card shadow mb-4">
-      <Row className="mt-4 mb-3">
-        <Col sm={{ span: 3, offset: 9 }}>
-          <Button
-            className="col-12"
-            variant="primary"
-            onClick={() => createModal("create")}
-          >
-            Tambah Data
-          </Button>
-        </Col>
-        <Modal show={show}>
-          <Modal.Header closeButton onClick={() => setShow(false)}>
-            <Modal.Title>
-              {type === "create" ? "Tambah" : "Edit"} Data Barang
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <FormBarang
-              refresh={fetchData}
-              modal={() => toggleModal()}
-              type={type}
-              data={editData}
-            />
-          </Modal.Body>
-        </Modal>
-      </Row>
-      <Table striped bordered hover size="md">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nama Barang</th>
-            <th scope="col">Tipe Barang</th>
-            <th scope="col">Kuantitas</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading ? (<tr><td colSpan="5" align="center"><Spinner animation="border"/></td></tr>):(
-            datas.map((items, i) => (
-              <tr key={i}>
-                <td
-                  onClick={() => detailData(items.id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {i + 1}
-                </td>
-                <td
-                  onClick={() => detailData(items.id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {items.nama_barang}
-                </td>
-                <td
-                  onClick={() => detailData(items.id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {items.tipe_barang}
-                </td>
-                <td
-                  onClick={() => detailData(items.id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {items.kuantitas}
-                </td>
-                <td>
-                  <div className="float-end">
-                    <BsFillPencilFill
-                      className="mx-1"
-                      color="green"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => editModal("edit", items)}
-                    />
-                    <BsXCircleFill
-                      className="mx-1"
-                      color="red"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => deleteData(items.id)}
-                    />
-                  </div>
+    <>
+      <Judul title="List Barang" info="Manajemen barang" />
+      <Col sm={8} className="mx-auto card shadow mb-4">
+        <Row className="mt-4 mb-3">
+          <Col sm={{ span: 3, offset: 9 }}>
+            <Button
+              className="col-12"
+              variant="primary"
+              onClick={() => createModal("create")}
+            >
+              Tambah Data
+            </Button>
+          </Col>
+          <Modal show={show}>
+            <Modal.Header closeButton onClick={() => setShow(false)}>
+              <Modal.Title>
+                {type === "create" ? "Tambah" : "Edit"} Data Barang
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <FormBarang
+                refresh={fetchData}
+                modal={() => toggleModal()}
+                type={type}
+                data={editData}
+              />
+            </Modal.Body>
+          </Modal>
+        </Row>
+        <Table striped bordered hover size="md">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nama Barang</th>
+              <th scope="col">Tipe Barang</th>
+              <th scope="col">Kuantitas</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan="5" align="center">
+                  <Spinner animation="border" />
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
-    </Col>
+            ) : (
+              datas.map((items, i) => (
+                <tr key={i}>
+                  <td
+                    onClick={() => detailData(items.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {i + 1}
+                  </td>
+                  <td
+                    onClick={() => detailData(items.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {items.nama_barang}
+                  </td>
+                  <td
+                    onClick={() => detailData(items.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {items.tipe_barang}
+                  </td>
+                  <td
+                    onClick={() => detailData(items.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {items.kuantitas}
+                  </td>
+                  <td>
+                    <div className="float-end">
+                      <BsFillPencilFill
+                        className="mx-1"
+                        color="green"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => editModal("edit", items)}
+                      />
+                      <BsXCircleFill
+                        className="mx-1"
+                        color="red"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => deleteData(items.id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </Col>
+    </>
   );
 }
 
