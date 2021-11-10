@@ -149,7 +149,7 @@ function Nav() {
                 to = "/login"
               >
                 <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profileut
+                Login
               </Link>
             </div>
           </li>

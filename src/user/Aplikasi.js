@@ -17,15 +17,15 @@ axios.defaults.withCredentials = true;
 const Aplikasi = () => {
   return (
     <Router>
-      <div id="page-top">
-        <div id="wrapper">
-          <SideNav />
-          <div id="content-wrapper" className="d-flex flex-column">
-            <div id="content">
-              <Nav />
-              <div className="container-fluid">
-                <div>
-                  <Switch>
+      <Switch>
+        {window.location.pathname !== "/login" ? (
+          <div id="page-top">
+            <div id="wrapper">
+              <SideNav />
+              <div id="content-wrapper" className="d-flex flex-column">
+                <div id="content">
+                  <Nav />
+                  <div className="container-fluid">
                     <Route exact path="/">
                       <h1>Hello</h1>
                       <CartAction />
@@ -49,10 +49,6 @@ const Aplikasi = () => {
                       <Judul title="List Barang" info="Manajemen barang" />
                       <ListBarang />
                     </Route>
-
-                    <Route exact path="/login">
-                      <Login />
-                    </Route>
                     <Route exact path="/lokasi">
                       <Judul
                         title="Lokasi Rental"
@@ -67,13 +63,16 @@ const Aplikasi = () => {
                       />
                       <Faq />
                     </Route>
-                  </Switch>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        ) : ("")}
+        <Route exact path="/login">
+            <Login />
+          </Route>
+      </Switch>
     </Router>
   );
 };
