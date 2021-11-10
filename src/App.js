@@ -7,7 +7,7 @@ const App = () => {
   const [cookies, setCookies] = useCookies(["authentication"])
 
   const handleState = () => [
-    setCookies("authentication", "0")
+    setCookies("authentication", "1")
   ]
   handleState()
 
