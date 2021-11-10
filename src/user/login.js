@@ -60,7 +60,7 @@ function Login(props) {
                           <div className="text-end">
                             <a
                               className="small"
-                              href="forgot-password.html"
+                              href="/forgot"
                               style={{
                               textDecoration: 'none'
                             }}>
@@ -76,7 +76,7 @@ function Login(props) {
                         <p className="small">
                           Belum punya akun?
                           <a
-                            href=""
+                            href="/register"
                             style={{
                             textDecoration: 'none'
                           }}>

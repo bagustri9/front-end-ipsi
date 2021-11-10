@@ -1,16 +1,16 @@
-import {Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Link, Redirect} from "react-router-dom";
 import {useState} from "react"
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 const Auth = (props) => {
 
-  const [confirm,
-    setConfirm] = useState(false)
+    const [confirm, setConfirm] = useState(false)
 
   const mySwal = withReactContent(Swal);
 
-  mySwal.fire({
+  mySwal
+    .fire({
     title: "Dibatasi!",
     text: "Anda harus login untuk menggunakan fitur ini!",
     icon: "warning",
@@ -18,9 +18,15 @@ const Auth = (props) => {
     cancelButtonText: "Lanjut melihat-lihat",
     showCancelButton: true
   })
+    .then((result) => {
+      if (result.isConfirmed) {
+        setConfirm(true)
+      }
+    })
+
   return (
-    ""
-    )
+      <Link to="/login"></Link>
+  )
 }
 
 export default Auth
