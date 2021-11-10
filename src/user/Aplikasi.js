@@ -10,6 +10,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import React from "react";
 import ListBarang from "../barang/ListBarang";
 import Login from "./Login";
+import Regis from "./Regis";
+import Forgot from "./Forgot";
 axios.defaults.withCredentials = true;
 
 const Aplikasi = () => {
@@ -31,6 +33,8 @@ const Aplikasi = () => {
                   <Route path="/lokasi" element={<Lokasi />} />
                   <Route path="/faq" element={<Faq />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/forgot" element={<Forgot />} />
+                  <Route path="/register" element={<Regis />} />
                 </Routes>
               </div>
             </div>

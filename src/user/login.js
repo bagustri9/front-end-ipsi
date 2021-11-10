@@ -47,20 +47,41 @@ function Login(props) {
                           required
                         />
                       </div>
-                      <div className="form-group">
-                        <input
-                          type="password"
-                          className="form-control form-control-user"
-                          id="passw"
-                          placeholder="Password"
-                          required
-                        />
-                      </div>
-                      <div className="form-group">
-                        <div className="text-end">
+                      <form className="user" onSubmit={handleSubmit}>
+                        <div className="form-group">
+                          <input
+                            type="email"
+                            className="form-control form-control-user"
+                            id="email"
+                            aria-describedby="emailHelp"
+                            placeholder="Email" required/></div>
+                        <div className="form-group">
+                          <input
+                            type="password"
+                            className="form-control form-control-user"
+                            id="passw"
+                            placeholder="Password" required/></div>
+                        <div className="form-group">
+                          <div className="text-end">
+                            <a
+                              className="small"
+                              href="/forgot"
+                              style={{
+                              textDecoration: 'none'
+                            }}>
+                              Lupa Password?
+                            </a>
+                            <br/>
+                          </div>
+                        </div>
+                        <input className="btn btn-primary btn-user btn-block" type="submit" value="Login"/>
+                      </form>
+                      <hr/>
+                      <div className="text-center">
+                        <p className="small">
+                          Belum punya akun?
                           <a
-                            className="small"
-                            href="forgot-password.html"
+                            href="/register"
                             style={{
                               textDecoration: "none",
                             }}
