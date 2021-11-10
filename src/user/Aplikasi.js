@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ListBarang from "../barang/ListBarang";
 import Login from "./Login";
 import CartAction from "../components/CartAction";
+import Auth from "../components/Auth"
 axios.defaults.withCredentials = true;
 
 const Aplikasi = () => {
@@ -39,6 +40,7 @@ const Aplikasi = () => {
                       <CardData />
                     </Route>
                     <Route exact path="/history">
+                    <Auth/>
                       <Judul
                         title="Riwayat Peminjaman Barang"
                         info="Temukan informasi riwayat peminjamanmu!"

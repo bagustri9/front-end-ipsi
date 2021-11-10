@@ -1,7 +1,9 @@
 import Aplikasi from "./user/Aplikasi";
 
 const App = () => {
-  <Aplikasi />
+  return (
+    <Aplikasi/>
+  )
 };
 
 export default App;
