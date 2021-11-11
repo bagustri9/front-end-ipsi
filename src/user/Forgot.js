@@ -1,5 +1,4 @@
 import api from "../api.js";
-import {BrowserRouter as Router} from "react-router-dom";
 import Logo from '../assets/img/logo.png'
 
 function Forgot(props) {
@@ -18,7 +17,6 @@ function Forgot(props) {
   }
 
   return (
-    <Router>
       <div className="container">
         <div className="row justify-content-center">
 
@@ -60,7 +58,6 @@ function Forgot(props) {
           </div>
         </div>
       </div>
-    </Router>
   )
 }
 

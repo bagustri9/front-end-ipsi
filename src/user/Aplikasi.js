@@ -1,24 +1,28 @@
-import React from "react";
-import axios from "axios";
-import CardData from "../barang/CardData";
-import Lokasi from "../tentang/lokasi";
-import Faq from "../tentang/faq";
-import Judul from "../menubar/judul";
+import "../App.css";
 import Nav from "../menubar/Nav";
 import SideNav from "../menubar/SideNav";
-import History from "../transaksi/History";
-import "../App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ListBarang from "../barang/ListBarang";
-import Login from "./Login";
-import Regis from "./Regis";
-import Forgot from "./Forgot";
-import CartAction from "../components/CartAction";
-import Auth from "../components/Auth"
-axios.defaults.withCredentials = true;
+import { Outlet, useLocation } from "react-router-dom";
+import Auth from "../components/Auth";
 
 const Aplikasi = () => {
+  const needAuth = ["/history"];
+  const adminRole = ["/barang"];
+  let location = useLocation();
+  const isAuth = () => {
+    return localStorage.getItem("token") !== null ? true : false;
+  };
+
+  const isAdmin = ()=>{
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.role)
+    if(user){
+      return user.role === 'Admin';
+    }
+    return false;
+  }
+
   return (
+<<<<<<< HEAD
     <Router>
       <Switch>
         {window.location.pathname === "/login" ? (
@@ -79,15 +83,35 @@ const Aplikasi = () => {
                         />
                         <Faq />
                       </Route>
+=======
+    <>
+      {needAuth.map((auth) =>
+        auth == location.pathname && !isAuth() ? (
+          <Auth type='auth'/>
+        ) : (
+          adminRole.map((role) =>
+            role == location.pathname && !isAdmin() ? (
+              <Auth type='role'/>
+            ) : (
+              <div id="page-top">
+                <div id="wrapper">
+                  <SideNav />
+                  <div id="content-wrapper" className="d-flex flex-column">
+                    <div id="content">
+                      <Nav />
+                      <div className="container-fluid">
+                        <Outlet />
+                      </div>
+>>>>>>> 7244f0d691fcc2b68a04f08c62a7d065bb24f295
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )
           )
-        }
-      </Switch>
-    </Router>
+        )
+      )}
+    </>
   );
 };
 

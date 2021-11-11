@@ -1,15 +1,28 @@
 import { BsFillCartFill } from "react-icons/bs";
 import Profile from "../assets/img/tes.png";
-import { NavLink, Link } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
-
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import CartAction from "../components/CartAction";
+import api from '../api'
 
 function Nav() {
   let isLogin = localStorage.getItem("token") === null ? false : true;
+  let navigate = useNavigate();
+  const logout = () =>{
+    let config = {
+      headers : {
+        'Authorization' : 'Bearer '+localStorage.getItem("token")
+      }
+    }
+    api.post('api/logout',"",config).then((res) =>{
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate('/');
+    })
+  }
 
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+      <CartAction />
       {/* Sidebar Toggle (Topbar) */}
       <button
         id="sidebarToggleTop"
@@ -144,10 +157,7 @@ function Nav() {
               className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown"
             >
-              <Link
-                className="dropdown-item"
-                to = "/login"
-              >
+              <Link className="dropdown-item" to="/login">
                 <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                 Login
               </Link>
@@ -192,9 +202,9 @@ function Nav() {
               >
                 Cancel
               </button>
-              <a className="btn btn-primary" href="login.html">
-                Profileut
-              </a>
+              <div data-dismiss="modal" className="btn btn-primary" onClick={() => logout()}>
+                Log Out
+              </div>
             </div>
           </div>
         </div>
