@@ -33,7 +33,7 @@ const Aplikasi = () => {
           <Route exact path="/forgot">
             <Forgot/>
           </Route>
-        ) : "" (
+        ) : (
             <div id="page-top">
               <div id="wrapper">
                 <SideNav />
