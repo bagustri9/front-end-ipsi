@@ -1,8 +1,12 @@
 import api from "../api.js";
-import { BrowserRouter as Router } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/img/logo.png";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function Login(props) {
+  const swal = withReactContent(Swal);
+  let navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -13,12 +17,24 @@ function Login(props) {
       password: passw,
     };
     api.get("/sanctum/csrf-cookie").then((response) => {
-      api.post(`/api/login/`, data).then((response) => {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        console.log(localStorage.getItem("token"));
-        console.log(JSON.parse(localStorage.getItem("user")));
-      });
+      api
+        .post(`/api/login/`, data)
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          console.log(localStorage.getItem("token"));
+          console.log(JSON.parse(localStorage.getItem("user")));
+          navigate("/");
+        })
+        .catch((error) => {
+          if (error.response.status == 401) {
+            swal.fire({
+              title: <strong>Gagal Login !</strong>,
+              html: <i>Email atau password salah</i>,
+              icon: "error",
+            });
+          }
+        });
     });
   };
 
@@ -47,41 +63,20 @@ function Login(props) {
                           required
                         />
                       </div>
-                      <form className="user" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                          <input
-                            type="email"
-                            className="form-control form-control-user"
-                            id="email"
-                            aria-describedby="emailHelp"
-                            placeholder="Email" required/></div>
-                        <div className="form-group">
-                          <input
-                            type="password"
-                            className="form-control form-control-user"
-                            id="passw"
-                            placeholder="Password" required/></div>
-                        <div className="form-group">
-                          <div className="text-end">
-                            <a
-                              className="small"
-                              href="/forgot"
-                              style={{
-                              textDecoration: 'none'
-                            }}>
-                              Lupa Password?
-                            </a>
-                            <br/>
-                          </div>
-                        </div>
-                        <input className="btn btn-primary btn-user btn-block" type="submit" value="Login"/>
-                      </form>
-                      <hr/>
-                      <div className="text-center">
-                        <p className="small">
-                          Belum punya akun?
+                      <div className="form-group">
+                        <input
+                          type="password"
+                          className="form-control form-control-user"
+                          id="passw"
+                          placeholder="Password"
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <div className="text-end">
                           <a
-                            href="/register"
+                            className="small"
+                            href="/forgot"
                             style={{
                               textDecoration: "none",
                             }}
@@ -97,18 +92,12 @@ function Login(props) {
                         value="Login"
                       />
                     </form>
-                    <hr />
                     <div className="text-center">
                       <p className="small">
                         Belum punya akun?
-                        <a
-                          href=""
-                          style={{
-                            textDecoration: "none",
-                          }}
-                        >
+                        <Link to="/register">
                           <b> Daftar!</b>
-                        </a>
+                        </Link>
                       </p>
                     </div>
                   </div>

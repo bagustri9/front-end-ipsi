@@ -1,46 +1,53 @@
-import axios from "axios";
-import CardData from "../barang/CardData";
-import Lokasi from "../tentang/lokasi";
-import Faq from "../tentang/faq";
+import "../App.css";
 import Nav from "../menubar/Nav";
 import SideNav from "../menubar/SideNav";
-import History from "../transaksi/History";
-import "../App.css";
-import { Route, Routes, useLocation } from "react-router-dom";
-import React from "react";
-import ListBarang from "../barang/ListBarang";
-import Login from "./Login";
-import Regis from "./Regis";
-import Forgot from "./Forgot";
-axios.defaults.withCredentials = true;
+import { Outlet, useLocation } from "react-router-dom";
+import Auth from "../components/Auth";
 
 const Aplikasi = () => {
+  const needAuth = ["/history"];
+  const adminRole = ["/barang"];
   let location = useLocation();
-  console.log(location.pathname);
+  const isAuth = () => {
+    return localStorage.getItem("token") !== null ? true : false;
+  };
+
+  const isAdmin = ()=>{
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.role)
+    if(user){
+      return user.role === 'Admin';
+    }
+    return false;
+  }
+
   return (
     <>
-      <div id="page-top">
-        <div id="wrapper">
-          {location.pathname !== "/login" ? <SideNav /> : ""}
-          <div id="content-wrapper" className="d-flex flex-column">
-            <div id="content">
-              {location.pathname !== "/login" ? <Nav /> : ""}
-              <div className="container-fluid">
-                <Routes>
-                  <Route path="/daftar-barang" element={<CardData />} />
-                  <Route path="/history" element={<History />} />
-                  <Route path="/barang" element={<ListBarang />} />
-                  <Route path="/lokasi" element={<Lokasi />} />
-                  <Route path="/faq" element={<Faq />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/forgot" element={<Forgot />} />
-                  <Route path="/register" element={<Regis />} />
-                </Routes>
+      {needAuth.map((auth) =>
+        auth == location.pathname && !isAuth() ? (
+          <Auth type='auth'/>
+        ) : (
+          adminRole.map((role) =>
+            role == location.pathname && !isAdmin() ? (
+              <Auth type='role'/>
+            ) : (
+              <div id="page-top">
+                <div id="wrapper">
+                  <SideNav />
+                  <div id="content-wrapper" className="d-flex flex-column">
+                    <div id="content">
+                      <Nav />
+                      <div className="container-fluid">
+                        <Outlet />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            )
+          )
+        )
+      )}
     </>
   );
 };
