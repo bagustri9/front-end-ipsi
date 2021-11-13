@@ -33,6 +33,9 @@
   0px 0px 159px rgba(0, 0, 0, 0.12)
 ;
 }
+.labelText {
+  font-size: 2vh;
+}
 
 @keyframes App-logo-spin {
   from {

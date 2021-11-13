@@ -1,47 +1,53 @@
-import { useState, useEffect } from "react";
-import api from "../api.js";
-import Card from "react-bootstrap/Card";
-import { Col, Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import Carousel from "react-bootstrap/Carousel";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Spinner from "react-bootstrap/Spinner";
-import Judul from "../menubar/judul";
+import { useState, useEffect } from "react"
+import api from "../api.js"
+import Card from "react-bootstrap/Card"
+import { Col, Container, Row } from "react-bootstrap"
+import Button from "react-bootstrap/Button"
+import { ListGroup, ListGroupItem } from "react-bootstrap"
+import Form from "react-bootstrap/Form"
+import Carousel from "react-bootstrap/Carousel"
+import FloatingLabel from "react-bootstrap/FloatingLabel"
+import Spinner from "react-bootstrap/Spinner"
+import Judul from "../menubar/judul"
+import {useContext} from "react"
+import { KeranjangContext } from "../transaksi/KeranjangContext"
 
-function CardData(props) {
-  const [datas, setDatas] = useState([]);
-  const [isLoading, setLoading] = useState();
+const CardData = (props) =>  {
+  const [datas, setDatas] = useState([])
+  const [isLoading, setLoading] = useState()
+  const {keranjang, setKeranjang, crud} = useContext(KeranjangContext)
+  const {tambahKeranjang} = crud
 
+  console.log(keranjang)
   const fetchData = async (id, value) => {
-    setLoading(true);
+    setLoading(true)
     if (id === 1) {
-      let result = await api.get(`api/barang/${value}/filter`);
-      setDatas(result.data);
+      let result = await api.get(`api/barang/${value}/filter`)
+      setDatas(result.data)
     } else if (id === 2 && value.length !== 0) {
-      let result = await api.get(`api/barang/search_query=${value}`);
-      setDatas(result.data);
+      let result = await api.get(`api/barang/search_query=${value}`)
+      setDatas(result.data)
     } else {
-      let request = await api.get("api/barang");
-      setDatas(request.data);
+      let request = await api.get("api/barang")
+      setDatas(request.data)
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const filter = (event) => {
-    let value = event.target.value;
-    fetchData(1, value);
-  };
+    let value = event.target.value
+    fetchData(1, value)
+  }
 
   const find = (event) => {
-    let value = event.target.value;
-    fetchData(2, value);
-  };
+    let value = event.target.value
+    fetchData(2, value)
+  }
+
 
   return (
     <>
@@ -111,8 +117,8 @@ function CardData(props) {
                   <Card.Body>
                     <Card.Title>{barang.nama_barang}</Card.Title>
                   </Card.Body>
-                  <ListGroup className="list-group-flush">
-                    <ListGroupItem>
+                  <ListGroup className="list-group-flush" key={idx}>
+                    <ListGroupItem >
                       Tersedia : {barang.kuantitas} unit
                     </ListGroupItem>
                     <ListGroupItem>
@@ -121,7 +127,7 @@ function CardData(props) {
                   </ListGroup>
                   <Card.Body>
                     <Card.Link href="#">
-                      <Button variant="primary">+</Button>
+                      <Button value={barang.id} variant="primary" onClick={tambahKeranjang}>+</Button>
                     </Card.Link>
                   </Card.Body>
                 </Card>
@@ -131,7 +137,7 @@ function CardData(props) {
         </Row>
       </Container>
     </>
-  );
+  )
 }
 
-export default CardData;
+export default CardData

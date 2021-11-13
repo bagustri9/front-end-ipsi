@@ -1,10 +1,14 @@
-import { BsFillCartFill } from "react-icons/bs";
+import { BsFillCartFill, BsFillPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs";
 import Profile from "../assets/img/tes.png";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import CartAction from "../components/CartAction";
 import api from '../api'
+import {useContext} from "react"
+import { KeranjangContext } from "../transaksi/KeranjangContext"
 
-function Nav() {
+const Nav = () => {
+  const {keranjang, setKeranjang} = useContext(KeranjangContext)
+
   let isLogin = localStorage.getItem("token") === null ? false : true;
   let navigate = useNavigate();
   const logout = () =>{
@@ -22,7 +26,6 @@ function Nav() {
 
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-      <CartAction />
       {/* Sidebar Toggle (Topbar) */}
       <button
         id="sidebarToggleTop"
@@ -45,7 +48,7 @@ function Nav() {
             aria-expanded="false"
           >
             <BsFillCartFill /> {/* Counter - Messages */}
-            <span className="badge badge-danger badge-counter">7</span>
+            <span className="badge badge-danger badge-counter">{keranjang.length}</span>
           </a>
           {/* Dropdown - Messages */}
           <div
@@ -54,22 +57,21 @@ function Nav() {
           >
             <h6 className="dropdown-header">Keranjang Barang</h6>
             <div className="dropdown-item d-flex align-items-center" href="#">
-              <div className="dropdown-list-image mr-3">
+              {/* <div className="dropdown-list-image mr-3">
                 <img
                   className="rounded-circle"
                   src="img/undraw_profile_1.svg"
                   alt="..."
                 />
-              </div>
+              </div> */}
               <div className="font-weight-bold">
                 <div className="text-truncate">Sony A7S Mark II BO</div>
                 <div className="small text-gray-500">Kuantitas : 1</div>
               </div>
-              <CartAction />
             </div>
             <NavLink
               className="dropdown-item text-center big bg-gradient-blue-100"
-              to="/history"
+              to="/peminjaman"
             >
               Siap Rental Barang?
             </NavLink>
@@ -96,6 +98,7 @@ function Nav() {
                 style={{
                   width: "40px",
                   height: "40px",
+                  objectFit: "cover"
                 }}
                 src={Profile}
               />
@@ -105,18 +108,10 @@ function Nav() {
               className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown"
             >
-              <a className="dropdown-item" href="#">
-                <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profile
-              </a>
-              <a className="dropdown-item" href="#">
-                <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                Settings
-              </a>
-              <a className="dropdown-item" href="#">
-                <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                Activity Log
-              </a>
+              <NavLink className="dropdown-item" to="/profile">
+                <BsFillPersonFill className="mr-2"/>
+                 Profil
+              </NavLink>
               <div className="dropdown-divider"></div>
               <a
                 className="dropdown-item"
@@ -124,8 +119,8 @@ function Nav() {
                 data-toggle="modal"
                 data-target="#ProfileutModal"
               >
-                <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profileut
+                <BsReverseLayoutSidebarInsetReverse className="mr-2"/>
+                Logout
               </a>
             </div>
           </li>
