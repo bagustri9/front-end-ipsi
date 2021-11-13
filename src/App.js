@@ -11,13 +11,13 @@ import Login from "./user/Login";
 import Regis from "./user/Regis";
 import Forgot from "./user/Forgot";
 import Profile from "./user/Profile";
-import { KeranjangProvider } from "./transaksi/KeranjangContext"
+import { BarangProvider } from "./barang/BarangContext"
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 axios.defaults.withCredentials = true;
 const App = () => {
   return (
-    <KeranjangProvider>
+    <BarangProvider>
       <Router>
         <Routes>
           <Route path="/" element={< Aplikasi />}>
@@ -35,7 +35,7 @@ const App = () => {
           <Route path="/forgot" element={< Forgot />}/>
         </Routes>
       </Router>
-    </KeranjangProvider>
+    </BarangProvider>
   );
 };
 

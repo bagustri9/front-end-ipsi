@@ -1,42 +1,47 @@
-import { useState, useEffect } from "react";
-import api from "../api.js";
-import FormBarang from "./FormBarang.js";
-import { Col, Table, Row, Button, Modal } from "react-bootstrap";
-import { BsXCircleFill, BsFillPencilFill } from "react-icons/bs";
-import Spinner from "react-bootstrap/Spinner";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import Judul from "../menubar/judul";
+import { useState, useEffect } from "react"
+import api from "../api.js"
+import FormBarang from "./FormBarang.js"
+import { Col, Table, Row, Button, Modal } from "react-bootstrap"
+import { BsXCircleFill, BsFillPencilFill } from "react-icons/bs"
+import Spinner from "react-bootstrap/Spinner"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+import Judul from "../menubar/judul"
+import {useContext} from "react"
+import { BarangContext } from "../barang/BarangContext"
 
-function ListBarang() {
-  const [show, setShow] = useState(false);
-  const [datas, setDatas] = useState([]);
-  const [type, setType] = useState();
-  const [isLoading, setLoading] = useState();
-  const [editData, setEditData] = useState();
-  const swal = withReactContent(Swal);
+const ListBarang = () => {
+const {keranjang, setKeranjang, barang, setBarang} = useContext(BarangContext)
+
+  const [show, setShow] = useState(false)
+  const [datas, setDatas] = useState([])
+  const [type, setType] = useState()
+  const [isLoading, setLoading] = useState()
+  const [editData, setEditData] = useState()
+  const swal = withReactContent(Swal)
   const fetchData = async () => {
-    setLoading(true);
-    let request = await api.get("api/barang");
-    setDatas(request.data);
-    setLoading(false);
-  };
+    setLoading(true)
+    let request = await api.get("api/barang")
+    setDatas(request.data)
+    setBarang(request.data)
+    setLoading(false)
+  }
   const createModal = (tipe) => {
-    setType(tipe);
-    setShow(true);
-    setEditData([]);
-  };
+    setType(tipe)
+    setShow(true)
+    setEditData([])
+  }
   const editModal = (tipe, data) => {
-    setEditData(data);
-    setType(tipe);
-    setShow(true);
-  };
+    setEditData(data)
+    setType(tipe)
+    setShow(true)
+  }
   const toggleModal = (param) => {
-    setShow(param);
-  };
+    setShow(param)
+  }
   const detailData = (id) => {
-    console.log(id);
-  };
+    console.log(id)
+  }
   const deleteData = (id) => {
     swal
       .fire({
@@ -54,25 +59,25 @@ function ListBarang() {
             swal
               .fire("Deleted!", "Data berhasil dihapus!", "success")
               .then(() => {
-                fetchData();
-              });
-          });
+                fetchData()
+              })
+          })
         } else if (result.dismiss === swal.DismissReason.cancel) {
-          swal.fire("Cancelled", "Batal Menghapus Data :)", "error");
+          swal.fire("Cancelled", "Batal Menghapus Data :)", "error")
         }
       })
       .catch((err) => {
-        swal.fire("Failed to Delete!", "Error :" + err, "error");
-      });
-  };
+        swal.fire("Failed to Delete!", "Error :" + err, "error")
+      })
+  }
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   return (
     <>
-      <Judul title="List Barang" info="Manajemen barang" />
-      <Col sm={8} className="mx-auto card shadow mb-4">
+      <Judul title="Kelola Barang" info="Atur barang apa saja yang siap direntalkan!" />
+      <Col sm={12} className="mx-auto card shadow mb-4">
         <Row className="mt-4 mb-3">
           <Col sm={{ span: 3, offset: 9 }}>
             <Button
@@ -166,7 +171,7 @@ function ListBarang() {
         </Table>
       </Col>
     </>
-  );
+  )
 }
 
-export default ListBarang;
+export default ListBarang

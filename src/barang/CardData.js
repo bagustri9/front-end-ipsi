@@ -10,15 +10,14 @@ import FloatingLabel from "react-bootstrap/FloatingLabel"
 import Spinner from "react-bootstrap/Spinner"
 import Judul from "../menubar/judul"
 import {useContext} from "react"
-import { KeranjangContext } from "../transaksi/KeranjangContext"
+import { BarangContext } from "../barang/BarangContext"
 
 const CardData = (props) =>  {
   const [datas, setDatas] = useState([])
   const [isLoading, setLoading] = useState()
-  const {keranjang, setKeranjang, crud} = useContext(KeranjangContext)
+  const {keranjang, setKeranjang, barang, setBarang, crud} = useContext(BarangContext)
   const {tambahKeranjang} = crud
 
-  console.log(keranjang)
   const fetchData = async (id, value) => {
     setLoading(true)
     if (id === 1) {
@@ -30,6 +29,7 @@ const CardData = (props) =>  {
     } else {
       let request = await api.get("api/barang")
       setDatas(request.data)
+      setBarang(request.data)
     }
     setLoading(false)
   }
@@ -48,6 +48,13 @@ const CardData = (props) =>  {
     fetchData(2, value)
   }
 
+  const tambah = (e) => {
+    e.preventDefault()
+    let id = parseInt(e.target.value)
+    let lokasi = barang.map((arr) => {return arr.id}).indexOf(id)
+    let tambahan = barang[lokasi]
+    tambahKeranjang(tambahan)
+  }
 
   return (
     <>
@@ -102,7 +109,7 @@ const CardData = (props) =>  {
           ) : (
             datas.map((barang, idx) => (
               <Col md={3} sm={12}>
-                <Card className="cardBarang">
+                <Card className="cardBarang" key={idx}>
                   <Carousel>
                     {barang.gambar.map((gambar, idx) => (
                       <Carousel.Item>
@@ -117,7 +124,7 @@ const CardData = (props) =>  {
                   <Card.Body>
                     <Card.Title>{barang.nama_barang}</Card.Title>
                   </Card.Body>
-                  <ListGroup className="list-group-flush" key={idx}>
+                  <ListGroup className="list-group-flush">
                     <ListGroupItem >
                       Tersedia : {barang.kuantitas} unit
                     </ListGroupItem>
@@ -127,7 +134,7 @@ const CardData = (props) =>  {
                   </ListGroup>
                   <Card.Body>
                     <Card.Link href="#">
-                      <Button value={barang.id} variant="primary" onClick={tambahKeranjang}>+</Button>
+                      <Button value={barang.id} variant="primary" onClick={tambah}>+</Button>
                     </Card.Link>
                   </Card.Body>
                 </Card>

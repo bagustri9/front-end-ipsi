@@ -1,16 +1,16 @@
-import { BsFillCartFill, BsFillPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs";
-import Profile from "../assets/img/tes.png";
-import { NavLink, Link, useNavigate } from "react-router-dom";
-import CartAction from "../components/CartAction";
+import { BsFillCartFill, BsFillPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
+import Profile from "../assets/img/tes.png"
+import { NavLink, Link, useNavigate } from "react-router-dom"
 import api from '../api'
+import BarangKeranjang from "./BarangKeranjang"
 import {useContext} from "react"
-import { KeranjangContext } from "../transaksi/KeranjangContext"
+import { BarangContext } from "../barang/BarangContext"
 
 const Nav = () => {
-  const {keranjang, setKeranjang} = useContext(KeranjangContext)
+  const {keranjang, setKeranjang} = useContext(BarangContext)
 
-  let isLogin = localStorage.getItem("token") === null ? false : true;
-  let navigate = useNavigate();
+  let isLogin = localStorage.getItem("token") === null ? false : true
+  let navigate = useNavigate()
   const logout = () =>{
     let config = {
       headers : {
@@ -18,12 +18,12 @@ const Nav = () => {
       }
     }
     api.post('api/logout',"",config).then((res) =>{
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate('/');
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+      navigate('/')
     })
   }
-
+  console.log(keranjang)
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
       {/* Sidebar Toggle (Topbar) */}
@@ -56,19 +56,18 @@ const Nav = () => {
             aria-labelledby="messagesDropdown"
           >
             <h6 className="dropdown-header">Keranjang Barang</h6>
-            <div className="dropdown-item d-flex align-items-center" href="#">
               {/* <div className="dropdown-list-image mr-3">
                 <img
-                  className="rounded-circle"
-                  src="img/undraw_profile_1.svg"
-                  alt="..."
+                className="rounded-circle"
+                src="img/undraw_profile_1.svg"
+                alt="..."
                 />
               </div> */}
-              <div className="font-weight-bold">
-                <div className="text-truncate">Sony A7S Mark II BO</div>
-                <div className="small text-gray-500">Kuantitas : 1</div>
-              </div>
-            </div>
+              <BarangKeranjang nama="NGEN" kuantitas="1"/>
+              {keranjang ? (keranjang.map((cart, idx) => {
+                <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
+              })) : <h1>Meongg</h1>
+              }
             <NavLink
               className="dropdown-item text-center big bg-gradient-blue-100"
               to="/peminjaman"
@@ -205,7 +204,7 @@ const Nav = () => {
         </div>
       </div>
     </nav>
-  );
+  )
 }
 
-export default Nav;
+export default Nav
