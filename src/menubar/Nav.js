@@ -5,10 +5,11 @@ import api from '../api'
 import BarangKeranjang from "./BarangKeranjang"
 import {useContext} from "react"
 import { BarangContext } from "../barang/BarangContext"
+import Cookies from 'js-cookie'
 
 const Nav = () => {
   const {keranjang, setKeranjang} = useContext(BarangContext)
-
+  console.log("TES", Cookies.get('cart'))
   let isLogin = localStorage.getItem("token") === null ? false : true
   let navigate = useNavigate()
   const logout = () =>{
@@ -63,10 +64,11 @@ const Nav = () => {
                 alt="..."
                 />
               </div> */}
-              <BarangKeranjang nama="NGEN" kuantitas="1"/>
               {keranjang ? (keranjang.map((cart, idx) => {
-                <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
-              })) : <h1>Meongg</h1>
+                return (
+                  <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
+                )
+              })) : ""
               }
             <NavLink
               className="dropdown-item text-center big bg-gradient-blue-100"
