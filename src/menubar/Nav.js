@@ -1,25 +1,38 @@
-import { BsFillCartFill } from "react-icons/bs";
+import { BsFillCartFill, BsPersonFill } from "react-icons/bs";
 import Profile from "../assets/img/tes.png";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import CartAction from "../components/CartAction";
-import api from '../api'
+import api from "../api";
+import { useState, useEffect } from "react";
 
 function Nav() {
+  let [user, setUser] = useState({ image: null });
   let isLogin = localStorage.getItem("token") === null ? false : true;
   let navigate = useNavigate();
-  const logout = () =>{
-    let config = {
-      headers : {
-        'Authorization' : 'Bearer '+localStorage.getItem("token")
-      }
-    }
-    api.post('api/logout',"",config).then((res) =>{
+  let config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const logout = () => {
+    api.post("api/logout", "", config).then((res) => {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      navigate('/');
-    })
-  }
+      navigate("/");
+    });
+  };
 
+  const getProfile = async () => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let request = await api.get("api/user/" + user.id, config);
+    setUser(request.data);
+  };
+
+  useEffect(() => {
+    if (isLogin) {
+      getProfile();
+    }
+  });
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
       <CartAction />
@@ -89,34 +102,30 @@ function Nav() {
               aria-expanded="false"
             >
               <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                User
+                {user.nama_lengkap}
               </span>
-              <img
-                className="img-profile rounded-circle"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                }}
-                src={Profile}
-              />
+              {user.gambar ? (
+                <img
+                  className="img-profile rounded-circle"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                  src={user.gambar}
+                />
+              ) : (
+                <BsPersonFill />
+              )}
             </a>
             {/* Dropdown - User Information */}
             <div
               className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown"
             >
-              <a className="dropdown-item" href="#">
+              <Link className="dropdown-item" to="/profile">
                 <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Profile
-              </a>
-              <a className="dropdown-item" href="#">
-                <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                Settings
-              </a>
-              <a className="dropdown-item" href="#">
-                <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                Activity Log
-              </a>
+              </Link>
               <div className="dropdown-divider"></div>
               <a
                 className="dropdown-item"
@@ -131,37 +140,11 @@ function Nav() {
           </li>
         ) : (
           <li className="nav-item dropdown no-arrow">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
-              id="userDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+            <Link className="nav-link dropdown-toggle" to="/login">
               <span className="mr-2 d-none d-lg-inline text-gray-600 small">
                 Login
               </span>
-              <img
-                className="img-profile rounded-circle"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                }}
-                src={Profile}
-              />
-            </a>
-            {/* Dropdown - User Information */}
-            <div
-              className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-              aria-labelledby="userDropdown"
-            >
-              <Link className="dropdown-item" to="/login">
-                <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Login
-              </Link>
-            </div>
+            </Link>
           </li>
         )}
         {/* Nav Item - User Information */}
@@ -179,7 +162,7 @@ function Nav() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Ready to Leave?
+                Apa anda yakin ?
               </h5>
               <button
                 className="close"
@@ -191,8 +174,7 @@ function Nav() {
               </button>
             </div>
             <div className="modal-body">
-              Select "Profileut" below if you are ready to end your current
-              session.
+              Tekan "Log out" jika ingin keluar
             </div>
             <div className="modal-footer">
               <button
@@ -202,7 +184,11 @@ function Nav() {
               >
                 Cancel
               </button>
-              <div data-dismiss="modal" className="btn btn-primary" onClick={() => logout()}>
+              <div
+                data-dismiss="modal"
+                className="btn btn-primary"
+                onClick={() => logout()}
+              >
                 Log Out
               </div>
             </div>

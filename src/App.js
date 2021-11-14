@@ -5,6 +5,7 @@ import CardData from "./barang/CardData";
 import Lokasi from "./tentang/lokasi";
 import Faq from "./tentang/faq";
 import History from "./transaksi/History";
+import EditProfile from "./user/EditProfile";
 import Aplikasi from "./user/Aplikasi";
 import Login from "./user/Login";
 import Regis from "./user/Regis";
@@ -17,12 +18,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Aplikasi />}>
           <Route path="/history" element={<History />} />
+          <Route path="/profile" element={<EditProfile />} />
           <Route path="/barang" element={<ListBarang />} />
-          <Route path="/forgot" element={<Forgot />} />
           <Route path="/daftar-barang" element={<CardData />} />
           <Route path="/lokasi" element={<Lokasi />} />
           <Route path="/faq" element={<Faq />} />
         </Route>
+        <Route path="/forgot" element={<Forgot />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Regis />} />
       </Routes>

@@ -2,8 +2,11 @@ import api from "../api.js";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function Regis(props) {
+  const swal = withReactContent(Swal);
   let [error, setError] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -23,12 +26,26 @@ function Regis(props) {
       password: passw,
       password_confirmation: passw2,
     };
+    swal.showLoading();
     api
       .post("api/register", data)
-      .then(() => {
-        navigate("/");
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        swal.fire({
+          title: <strong>Berhasil Register !</strong>,
+          html: <i>tekan ok untuk melanjutkan</i>,
+          icon: "success",
+        }).then(() => {
+          navigate("/");
+        });
       })
       .catch((err) => {
+        swal.fire({
+          title: <strong>Gagal Mendaftar !</strong>,
+          html: <i>Terdapat kesalahan</i>,
+          icon: "error",
+        });
         setError(err.response.data.errors);
         setShow(true);
       });

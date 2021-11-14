@@ -16,15 +16,20 @@ function Login(props) {
       email: email,
       password: passw,
     };
+    swal.showLoading()
     api.get("/sanctum/csrf-cookie").then((response) => {
       api
         .post(`/api/login/`, data)
         .then((response) => {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user", JSON.stringify(response.data.user));
-          console.log(localStorage.getItem("token"));
-          console.log(JSON.parse(localStorage.getItem("user")));
-          navigate("/");
+          swal.fire({
+            title: <strong>Berhasil Login !</strong>,
+            html: <i>tekan ok untuk melanjutkan</i>,
+            icon: "success",
+          }).then(() => {
+            navigate("/");
+          });
         })
         .catch((error) => {
           if (error.response.status == 401) {
