@@ -1,8 +1,8 @@
-import "../App.css";
-import Nav from "../menubar/Nav";
-import SideNav from "../menubar/SideNav";
-import { Outlet, useLocation } from "react-router-dom";
-import Auth from "../components/Auth";
+import "../App.css"
+import Nav from "../menubar/Nav"
+import SideNav from "../menubar/SideNav"
+import { Outlet, useLocation } from "react-router-dom"
+import Auth from "../components/Auth"
 
 const Aplikasi = () => {
   const needAuth = ["/history", "/profile"];
@@ -32,6 +32,7 @@ const Aplikasi = () => {
 
   return (
     <>
+<<<<<<< HEAD
       {needAuth.map((auth, idx) =>
         auth == location.pathname && !isAuth()
           ? setRole(0)
@@ -48,6 +49,28 @@ const Aplikasi = () => {
                 <Nav />
                 <div className="container-fluid">
                   <Outlet />
+=======
+      {needAuth.map((auth) =>
+        auth == location.pathname && !isAuth() ? (
+          <Auth type='auth'/>
+        ) : (
+          adminRole.map((role) =>
+            role == location.pathname && !isAdmin() ? (
+              <Auth type='role'/>
+            ) : (
+              <div id="page-top">
+                <div id="wrapper">
+                    <SideNav />
+                    {/* {isAdmin() === "Admin" ? <SideNavAdmin/> : ""} */}
+                  <div id="content-wrapper" className="d-flex flex-column">
+                    <div id="content">
+                      <Nav />
+                      <div className="container-fluid">
+                        <Outlet />
+                      </div>
+                    </div>
+                  </div>
+>>>>>>> e4fa0e6dbeb5c45152ff3cd3cc61a0a3e70485ab
                 </div>
               </div>
             </div>

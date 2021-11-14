@@ -1,6 +1,6 @@
 import {NavLink} from 'react-router-dom'
 import Logo from '../assets/img/logo.png'
-import {BsFillCameraFill, BsFillBagCheckFill, BsPeopleFill, BsFillFolderFill} from "react-icons/bs";
+import {BsFillCameraFill, BsFillBagCheckFill, BsPeopleFill, BsFillFolderFill, BsFolderFill} from "react-icons/bs";
 
 const SideNav = () => {
   return (
@@ -11,7 +11,7 @@ const SideNav = () => {
       <NavLink
         exact
         className="sidebar-brand d-flex align-items-center justify-content-center my-3"
-        to="/"
+        to="/daftar-barang"
       >
         <img
           src={Logo}
@@ -22,23 +22,28 @@ const SideNav = () => {
         />
       </NavLink>
 
-      <li className="nav-item active">
+      {/* <li className="nav-item active">
         <a className="nav-link" 
           href="index.html">
-          <BsFillFolderFill/>
-          <span style={{marginLeft: "10px"}}>Dashboard</span>
+          <BsFillFolderFill className="mr-2"/>
+          <span>Dashboard</span>
         </a>
-      </li>
+      </li> */}
+
+      <div className="sidebar-heading">
+        Member
+        <hr className="mt-1 mb-1"/>
+      </div>
       <li className="nav-item">
         <a
-          className="nav-link collapsed"
+          className="nav-link collapsed mt-0"
           data-toggle="collapse"
           href="#"
           data-target="#collapseTwo"
           aria-expanded="true"
           aria-controls="collapseTwo">
-          <BsFillCameraFill/>
-          <span style={{marginLeft: "10px"}}>Barang Rental</span>
+          <BsFillCameraFill className="mr-2"/>
+          <span>Barang Rental</span>
         </a>
 
         <div
@@ -65,8 +70,8 @@ const SideNav = () => {
           data-target="#collapseUtilities"
           aria-expanded="true"
           aria-controls="collapseUtilities">
-          <BsFillBagCheckFill/>
-          <span style={{marginLeft: "10px"}}>Transaksi Rental</span>
+          <BsFillBagCheckFill className="mr-2"/>
+          <span>Transaksi Rental</span>
         </a>
         <div
           id="collapseUtilities"
@@ -75,14 +80,8 @@ const SideNav = () => {
           data-parent="#accordionSidebar"
         >
           <div className="bg-white py-2 collapse-inner rounded">
-            <NavLink activeClassName="active" className="collapse-item" to="/faq">
-              Peminjaman Barang
-            </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/faq">
-              Pembayaran Barang
-            </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/faq">
-              Pengembalian Barang
+            <NavLink activeClassName="active" className="collapse-item" to="peminjaman">
+              Peminjaman/Pembayaran
             </NavLink>
             <NavLink activeClassName="active" className="collapse-item" to="/history">
               Riwayat Peminjaman
@@ -98,8 +97,8 @@ const SideNav = () => {
           data-target="#collapsePages"
           aria-expanded="true"
           aria-controls="collapsePages">
-          <BsPeopleFill/>
-          <span style={{marginLeft:"10px"}}>Tentang</span>
+          <BsPeopleFill className="mr-2"/>
+          <span>Tentang</span>
         </a>
         <div
           id="collapsePages"
@@ -113,6 +112,39 @@ const SideNav = () => {
             </NavLink>
             <NavLink activeClassName="active" className="collapse-item" to="/lokasi">
               Lokasi Rental
+            </NavLink>
+          </div>
+        </div>
+      </li>
+
+      <div className="sidebar-heading mt-3">
+        Admin
+        <hr className="mt-1 mb-1"/>
+      </div>
+      <li className="nav-item">
+        <a
+          className="nav-link collapsed mt-0"
+          data-toggle="collapse"
+          href="#"
+          data-target="#collapseFive"
+          aria-expanded="true"
+          aria-controls="collapseFive">
+          <BsFillFolderFill className="mr-2"/>
+          <span>Menu Admin</span>
+        </a>
+
+        <div
+          id="collapseFive"
+          className="collapse"
+          aria-labelledby="headingFive"
+          data-parent="#accordionSidebar"
+        >
+          <div className="bg-white py-2 collapse-inner rounded">
+            <NavLink activeClassName="active" className="collapse-item" to="/barang">
+              Kelola Barang
+            </NavLink>
+            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+              Kelola Peminjaman
             </NavLink>
           </div>
         </div>

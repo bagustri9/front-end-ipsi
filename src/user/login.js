@@ -97,10 +97,13 @@ function Login(props) {
                         value="Login"
                       />
                     </form>
+                    <br/>
                     <div className="text-center">
                       <p className="small">
                         Belum punya akun?
-                        <Link to="/register">
+                        <Link to="/register" style={{
+                              textDecoration: "none",
+                            }}>
                           <b> Daftar!</b>
                         </Link>
                       </p>

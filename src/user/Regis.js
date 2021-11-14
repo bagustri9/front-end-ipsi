@@ -133,7 +133,7 @@ function Regis(props) {
                           required
                         />
                       </div>
-                      {/* <div class="form-group">
+                      <div class="form-group">
                         <div class="custom-control custom-checkbox small">
                           <input
                             type="checkbox"
@@ -148,17 +148,20 @@ function Regis(props) {
                             yang berlaku.
                           </label>
                         </div>
-                      </div> */}
+                      </div>
                       <input
                         className="btn btn-primary btn-user btn-block"
                         type="submit"
                         value="Daftar"
                       />
                     </form>
+                    <br/>
                     <div className="text-center">
                       <p className="small">
                         Sudah punya akun?
-                        <Link to="/login">
+                        <Link to="/login" style={{
+                              textDecoration: "none",
+                            }}>
                           <b> Login</b>
                         </Link>
                       </p>

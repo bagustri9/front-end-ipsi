@@ -1,27 +1,30 @@
-import { BsFillCartFill, BsPersonFill } from "react-icons/bs";
-import Profile from "../assets/img/tes.png";
-import { NavLink, Link, useNavigate } from "react-router-dom";
-import CartAction from "../components/CartAction";
-import api from "../api";
-import { useState, useEffect } from "react";
+import { BsFillCartFill, BsFillPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
+import Profile from "../assets/img/tes.png"
+import { NavLink, Link, useNavigate } from "react-router-dom"
+import api from '../api'
+import BarangKeranjang from "./BarangKeranjang"
+import {useContext} from "react"
+import { BarangContext } from "../barang/BarangContext"
+import Cookies from 'js-cookie'
 
-function Nav() {
+const Nav = () => {
   let [user, setUser] = useState({ image: null });
-  let isLogin = localStorage.getItem("token") === null ? false : true;
-  let navigate = useNavigate();
-  let config = {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  };
-  const logout = () => {
-    api.post("api/logout", "", config).then((res) => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/");
-    });
-  };
-
+  const {keranjang, setKeranjang} = useContext(BarangContext)
+  console.log("TES", Cookies.get('cart'))
+  let isLogin = localStorage.getItem("token") === null ? false : true
+  let navigate = useNavigate()
+  const logout = () =>{
+    let config = {
+      headers : {
+        'Authorization' : 'Bearer '+localStorage.getItem("token")
+      }
+    }
+    api.post('api/logout',"",config).then((res) =>{
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+      navigate('/')
+    })
+  }
   const getProfile = async () => {
     let user = JSON.parse(localStorage.getItem("user"));
     let request = await api.get("api/user/" + user.id, config);
@@ -33,9 +36,9 @@ function Nav() {
       getProfile();
     }
   });
+  console.log(keranjang)
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-      <CartAction />
       {/* Sidebar Toggle (Topbar) */}
       <button
         id="sidebarToggleTop"
@@ -58,7 +61,7 @@ function Nav() {
             aria-expanded="false"
           >
             <BsFillCartFill /> {/* Counter - Messages */}
-            <span className="badge badge-danger badge-counter">7</span>
+            <span className="badge badge-danger badge-counter">{keranjang.length}</span>
           </a>
           {/* Dropdown - Messages */}
           <div
@@ -66,23 +69,22 @@ function Nav() {
             aria-labelledby="messagesDropdown"
           >
             <h6 className="dropdown-header">Keranjang Barang</h6>
-            <div className="dropdown-item d-flex align-items-center" href="#">
-              <div className="dropdown-list-image mr-3">
+              {/* <div className="dropdown-list-image mr-3">
                 <img
-                  className="rounded-circle"
-                  src="img/undraw_profile_1.svg"
-                  alt="..."
+                className="rounded-circle"
+                src="img/undraw_profile_1.svg"
+                alt="..."
                 />
-              </div>
-              <div className="font-weight-bold">
-                <div className="text-truncate">Sony A7S Mark II BO</div>
-                <div className="small text-gray-500">Kuantitas : 1</div>
-              </div>
-              <CartAction />
-            </div>
+              </div> */}
+              {keranjang ? (keranjang.map((cart, idx) => {
+                return (
+                  <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
+                )
+              })) : ""
+              }
             <NavLink
               className="dropdown-item text-center big bg-gradient-blue-100"
-              to="/history"
+              to="/peminjaman"
             >
               Siap Rental Barang?
             </NavLink>
@@ -122,10 +124,10 @@ function Nav() {
               className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown"
             >
-              <Link className="dropdown-item" to="/profile">
-                <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profile
-              </Link>
+              <NavLink className="dropdown-item" to="/profile">
+                <BsFillPersonFill className="mr-2"/>
+                 Profil
+              </NavLink>
               <div className="dropdown-divider"></div>
               <a
                 className="dropdown-item"
@@ -133,8 +135,8 @@ function Nav() {
                 data-toggle="modal"
                 data-target="#ProfileutModal"
               >
-                <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profileut
+                <BsReverseLayoutSidebarInsetReverse className="mr-2"/>
+                Logout
               </a>
             </div>
           </li>
@@ -196,7 +198,7 @@ function Nav() {
         </div>
       </div>
     </nav>
-  );
+  )
 }
 
-export default Nav;
+export default Nav

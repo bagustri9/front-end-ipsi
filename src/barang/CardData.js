@@ -1,47 +1,60 @@
-import { useState, useEffect } from "react";
-import api from "../api.js";
-import Card from "react-bootstrap/Card";
-import { Col, Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import Carousel from "react-bootstrap/Carousel";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Spinner from "react-bootstrap/Spinner";
-import Judul from "../menubar/judul";
+import { useState, useEffect } from "react"
+import api from "../api.js"
+import Card from "react-bootstrap/Card"
+import { Col, Container, Row } from "react-bootstrap"
+import Button from "react-bootstrap/Button"
+import { ListGroup, ListGroupItem } from "react-bootstrap"
+import Form from "react-bootstrap/Form"
+import Carousel from "react-bootstrap/Carousel"
+import FloatingLabel from "react-bootstrap/FloatingLabel"
+import Spinner from "react-bootstrap/Spinner"
+import Judul from "../menubar/judul"
+import {useContext} from "react"
+import { BarangContext } from "../barang/BarangContext"
 
-function CardData(props) {
-  const [datas, setDatas] = useState([]);
-  const [isLoading, setLoading] = useState();
+const CardData = (props) =>  {
+  const [datas, setDatas] = useState([])
+  const [isLoading, setLoading] = useState()
+  const {keranjang, setKeranjang, barang, setBarang, crud} = useContext(BarangContext)
+  const {tambahKeranjang} = crud
 
   const fetchData = async (id, value) => {
-    setLoading(true);
+    setLoading(true)
     if (id === 1) {
-      let result = await api.get(`api/barang/${value}/filter`);
-      setDatas(result.data);
+      let result = await api.get(`api/barang/${value}/filter`)
+      setDatas(result.data)
     } else if (id === 2 && value.length !== 0) {
-      let result = await api.get(`api/barang/search_query=${value}`);
-      setDatas(result.data);
+      let result = await api.get(`api/barang/search_query=${value}`)
+      setDatas(result.data)
     } else {
-      let request = await api.get("api/barang");
-      setDatas(request.data);
+      let request = await api.get("api/barang")
+      setDatas(request.data)
+      setBarang(request.data)
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const filter = (event) => {
-    let value = event.target.value;
-    fetchData(1, value);
-  };
+    let value = event.target.value
+    fetchData(1, value)
+  }
 
   const find = (event) => {
-    let value = event.target.value;
-    fetchData(2, value);
-  };
+    let value = event.target.value
+    fetchData(2, value)
+  }
+
+  const tambah = (e) => {
+    e.preventDefault()
+    let id = parseInt(e.target.value)
+    let lokasi = barang.map((arr) => {return arr.id}).indexOf(id)
+    let tambahan = barang[lokasi]
+    tambahKeranjang(tambahan)
+  }
 
   return (
     <>
@@ -96,7 +109,7 @@ function CardData(props) {
           ) : (
             datas.map((barang, idx) => (
               <Col md={3} sm={12}>
-                <Card className="cardBarang">
+                <Card className="cardBarang" key={idx}>
                   <Carousel>
                     {barang.gambar.map((gambar, idx) => (
                       <Carousel.Item>
@@ -112,7 +125,7 @@ function CardData(props) {
                     <Card.Title>{barang.nama_barang}</Card.Title>
                   </Card.Body>
                   <ListGroup className="list-group-flush">
-                    <ListGroupItem>
+                    <ListGroupItem >
                       Tersedia : {barang.kuantitas} unit
                     </ListGroupItem>
                     <ListGroupItem>
@@ -121,7 +134,7 @@ function CardData(props) {
                   </ListGroup>
                   <Card.Body>
                     <Card.Link href="#">
-                      <Button variant="primary">+</Button>
+                      <Button value={barang.id} variant="primary" onClick={tambah}>+</Button>
                     </Card.Link>
                   </Card.Body>
                 </Card>
@@ -131,7 +144,7 @@ function CardData(props) {
         </Row>
       </Container>
     </>
-  );
+  )
 }
 
-export default CardData;
+export default CardData
