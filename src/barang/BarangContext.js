@@ -22,7 +22,7 @@ export const BarangProvider = props => {
             setFetch(false)
         }
 
-    },[keranjang, setKeranjang])
+    },[keranjang])
 
     const tambahKeranjang = (tambahan) => {
 
@@ -66,7 +66,7 @@ export const BarangProvider = props => {
     }
 
     return(
-        <BarangContext.Provider value= {{keranjang, setKeranjang, barang, setBarang, crud}}>
+        <BarangContext.Provider value= {{keranjang, setKeranjang, barang, setBarang, fetch, setFetch, crud}}>
             {props.children}
         </BarangContext.Provider>
     )

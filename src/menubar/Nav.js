@@ -1,24 +1,24 @@
-import { BsFillCartFill, BsFillPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
+import { BsFillCartFill, BsFillPersonFill, BsPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
 import Profile from "../assets/img/tes.png"
 import { NavLink, Link, useNavigate } from "react-router-dom"
 import api from '../api'
 import BarangKeranjang from "./BarangKeranjang"
 import {useContext} from "react"
 import { BarangContext } from "../barang/BarangContext"
+import {useState, useEffect} from "react"
 import Cookies from 'js-cookie'
 
 const Nav = () => {
   let [user, setUser] = useState({ image: null });
-  const {keranjang, setKeranjang} = useContext(BarangContext)
-  console.log("TES", Cookies.get('cart'))
+  const {keranjang, setKeranjang, fetch, setFetch} = useContext(BarangContext)
   let isLogin = localStorage.getItem("token") === null ? false : true
   let navigate = useNavigate()
-  const logout = () =>{
-    let config = {
-      headers : {
-        'Authorization' : 'Bearer '+localStorage.getItem("token")
-      }
+  let config = {
+    headers : {
+      'Authorization' : 'Bearer '+localStorage.getItem("token")
     }
+  }
+  const logout = () =>{
     api.post('api/logout',"",config).then((res) =>{
       localStorage.removeItem("token")
       localStorage.removeItem("user")
@@ -32,10 +32,20 @@ const Nav = () => {
   };
 
   useEffect(() => {
+    const checkCookie = () => {
+      if(Cookies.get('cart') !== undefined) {
+          setKeranjang(JSON.parse(Cookies.get('cart')))
+      }
+  }
+  if(fetch) {
+      checkCookie()
+      setFetch(false)
+  }
+
     if (isLogin) {
       getProfile();
     }
-  });
+  }, []);
   console.log(keranjang)
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -76,7 +86,7 @@ const Nav = () => {
                 alt="..."
                 />
               </div> */}
-              {keranjang ? (keranjang.map((cart, idx) => {
+              {keranjang.length !== 0 ? (keranjang.map((cart, idx) => {
                 return (
                   <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
                 )
