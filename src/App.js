@@ -5,6 +5,7 @@ import CardData from "./barang/CardData";
 import Lokasi from "./tentang/lokasi";
 import Faq from "./tentang/faq";
 import History from "./transaksi/History";
+import Peminjaman from "./transaksi/Peminjaman";
 import EditProfile from "./user/EditProfile";
 import Aplikasi from "./user/Aplikasi";
 import Login from "./user/Login";

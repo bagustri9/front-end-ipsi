@@ -1,30 +1,35 @@
-import { BsFillCartFill, BsFillPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
-import Profile from "../assets/img/tes.png"
-import { NavLink, Link, useNavigate } from "react-router-dom"
-import api from '../api'
-import BarangKeranjang from "./BarangKeranjang"
-import {useContext} from "react"
-import { BarangContext } from "../barang/BarangContext"
-import Cookies from 'js-cookie'
+import {
+  BsFillCartFill,
+  BsFillPersonFill,
+  BsPersonFill,
+  BsReverseLayoutSidebarInsetReverse,
+} from "react-icons/bs";
+import Profile from "../assets/img/tes.png";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import api from "../api";
+import BarangKeranjang from "./BarangKeranjang";
+import { useContext, useState, useEffect } from "react";
+import { BarangContext } from "../barang/BarangContext";
+import Cookies from "js-cookie";
 
 const Nav = () => {
   let [user, setUser] = useState({ image: null });
-  const {keranjang, setKeranjang} = useContext(BarangContext)
-  console.log("TES", Cookies.get('cart'))
-  let isLogin = localStorage.getItem("token") === null ? false : true
-  let navigate = useNavigate()
-  const logout = () =>{
-    let config = {
-      headers : {
-        'Authorization' : 'Bearer '+localStorage.getItem("token")
-      }
-    }
-    api.post('api/logout',"",config).then((res) =>{
-      localStorage.removeItem("token")
-      localStorage.removeItem("user")
-      navigate('/')
-    })
-  }
+  const { keranjang, setKeranjang } = useContext(BarangContext);
+  console.log("TES", Cookies.get("cart"));
+  let isLogin = localStorage.getItem("token") === null ? false : true;
+  let navigate = useNavigate();
+  let config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const logout = () => {
+    api.post("api/logout", "", config).then((res) => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate("/");
+    });
+  };
   const getProfile = async () => {
     let user = JSON.parse(localStorage.getItem("user"));
     let request = await api.get("api/user/" + user.id, config);
@@ -36,7 +41,7 @@ const Nav = () => {
       getProfile();
     }
   });
-  console.log(keranjang)
+  console.log(keranjang);
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
       {/* Sidebar Toggle (Topbar) */}
@@ -61,7 +66,9 @@ const Nav = () => {
             aria-expanded="false"
           >
             <BsFillCartFill /> {/* Counter - Messages */}
-            <span className="badge badge-danger badge-counter">{keranjang.length}</span>
+            <span className="badge badge-danger badge-counter">
+              {keranjang.length}
+            </span>
           </a>
           {/* Dropdown - Messages */}
           <div
@@ -69,19 +76,24 @@ const Nav = () => {
             aria-labelledby="messagesDropdown"
           >
             <h6 className="dropdown-header">Keranjang Barang</h6>
-              {/* <div className="dropdown-list-image mr-3">
+            {/* <div className="dropdown-list-image mr-3">
                 <img
                 className="rounded-circle"
                 src="img/undraw_profile_1.svg"
                 alt="..."
                 />
               </div> */}
-              {keranjang ? (keranjang.map((cart, idx) => {
-                return (
-                  <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
-                )
-              })) : ""
-              }
+            {keranjang
+              ? keranjang.map((cart, idx) => {
+                  return (
+                    <BarangKeranjang
+                      nama={cart.nama_barang}
+                      kuantitas={cart.kuantitas}
+                      key={idx}
+                    />
+                  );
+                })
+              : ""}
             <NavLink
               className="dropdown-item text-center big bg-gradient-blue-100"
               to="/peminjaman"
@@ -125,8 +137,8 @@ const Nav = () => {
               aria-labelledby="userDropdown"
             >
               <NavLink className="dropdown-item" to="/profile">
-                <BsFillPersonFill className="mr-2"/>
-                 Profil
+                <BsFillPersonFill className="mr-2" />
+                Profil
               </NavLink>
               <div className="dropdown-divider"></div>
               <a
@@ -135,7 +147,7 @@ const Nav = () => {
                 data-toggle="modal"
                 data-target="#ProfileutModal"
               >
-                <BsReverseLayoutSidebarInsetReverse className="mr-2"/>
+                <BsReverseLayoutSidebarInsetReverse className="mr-2" />
                 Logout
               </a>
             </div>
@@ -175,9 +187,7 @@ const Nav = () => {
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div className="modal-body">
-              Tekan "Log out" jika ingin keluar
-            </div>
+            <div className="modal-body">Tekan "Log out" jika ingin keluar</div>
             <div className="modal-footer">
               <button
                 className="btn btn-secondary"
@@ -198,7 +208,7 @@ const Nav = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;
