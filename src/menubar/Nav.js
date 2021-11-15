@@ -1,35 +1,30 @@
-import {
-  BsFillCartFill,
-  BsFillPersonFill,
-  BsPersonFill,
-  BsReverseLayoutSidebarInsetReverse,
-} from "react-icons/bs";
-import Profile from "../assets/img/tes.png";
-import { NavLink, Link, useNavigate } from "react-router-dom";
-import api from "../api";
-import BarangKeranjang from "./BarangKeranjang";
-import { useContext, useState, useEffect } from "react";
-import { BarangContext } from "../barang/BarangContext";
-import Cookies from "js-cookie";
+import { BsFillCartFill, BsFillPersonFill, BsPersonFill, BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
+import Profile from "../assets/img/tes.png"
+import { NavLink, Link, useNavigate } from "react-router-dom"
+import api from '../api'
+import BarangKeranjang from "./BarangKeranjang"
+import {useContext} from "react"
+import { BarangContext } from "../barang/BarangContext"
+import {useState, useEffect} from "react"
+import Cookies from 'js-cookie'
 
 const Nav = () => {
   let [user, setUser] = useState({ image: null });
-  const { keranjang, setKeranjang } = useContext(BarangContext);
-  console.log("TES", Cookies.get("cart"));
-  let isLogin = localStorage.getItem("token") === null ? false : true;
-  let navigate = useNavigate();
+  const {keranjang, setKeranjang, fetch, setFetch} = useContext(BarangContext)
+  let isLogin = localStorage.getItem("token") === null ? false : true
+  let navigate = useNavigate()
   let config = {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  };
-  const logout = () => {
-    api.post("api/logout", "", config).then((res) => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/");
-    });
-  };
+    headers : {
+      'Authorization' : 'Bearer '+localStorage.getItem("token")
+    }
+  }
+  const logout = () =>{
+    api.post('api/logout',"",config).then((res) =>{
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+      navigate('/')
+    })
+  }
   const getProfile = async () => {
     let user = JSON.parse(localStorage.getItem("user"));
     let request = await api.get("api/user/" + user.id, config);
@@ -37,11 +32,26 @@ const Nav = () => {
   };
 
   useEffect(() => {
+    const checkCookie = () => {
+      if(Cookies.get('cart') !== undefined) {
+          setKeranjang(JSON.parse(Cookies.get('cart')))
+      }
+  }
+  if(fetch) {
+      checkCookie()
+      setFetch(false)
+  }
+
     if (isLogin) {
       getProfile();
     }
+<<<<<<< HEAD
   });
   console.log(keranjang);
+=======
+  }, []);
+  console.log(keranjang)
+>>>>>>> f98dce5b483a151c425cac0fd1be692f01947fb5
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
       {/* Sidebar Toggle (Topbar) */}
@@ -83,6 +93,7 @@ const Nav = () => {
                 alt="..."
                 />
               </div> */}
+<<<<<<< HEAD
             {keranjang
               ? keranjang.map((cart, idx) => {
                   return (
@@ -94,6 +105,14 @@ const Nav = () => {
                   );
                 })
               : ""}
+=======
+              {keranjang.length !== 0 ? (keranjang.map((cart, idx) => {
+                return (
+                  <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
+                )
+              })) : ""
+              }
+>>>>>>> f98dce5b483a151c425cac0fd1be692f01947fb5
             <NavLink
               className="dropdown-item text-center big bg-gradient-blue-100"
               to="/peminjaman"
