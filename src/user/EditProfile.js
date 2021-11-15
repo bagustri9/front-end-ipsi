@@ -97,7 +97,7 @@ const EditProfile = () => {
         <div class="card-body row">
           <div className="col-md-4 col-sm-12 position-relative">
             <div className="img-wrapper">
-              {user.gambar ? (
+              {user.image ? (
                 <img src={user.gambar} className="img-responsive col-12"/>
               ) : (
                 <BsPerson classname="img-responsive" size="lg" />
