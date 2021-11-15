@@ -16,6 +16,7 @@ function Regis(props) {
     let nama = e.target.namaLengkap.value;
     let email = e.target.email.value;
     let noTelp = e.target.noTelp.value;
+    let alamat = e.target.alamat.value;
     let passw = e.target.passw.value;
     let passw2 = e.target.passw2.value;
 
@@ -23,6 +24,7 @@ function Regis(props) {
       nama_lengkap: nama,
       email: email,
       phone: noTelp,
+      alamat: alamat,
       password: passw,
       password_confirmation: passw2,
     };
@@ -112,6 +114,16 @@ function Regis(props) {
                           id="noTelp"
                           aria-describedby="noTelpHelp"
                           placeholder="No Telepon"
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          className="form-control form-control-user"
+                          id="alamat"
+                          aria-describedby="noTelpHelp"
+                          placeholder="Alamat"
                           required
                         />
                       </div>

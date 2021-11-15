@@ -5,7 +5,7 @@ import { Outlet, useLocation } from "react-router-dom"
 import Auth from "../components/Auth"
 
 const Aplikasi = () => {
-  const needAuth = ["/history", "/profile"];
+  const needAuth = ["/history", "/profile", "/peminjaman"];
   const adminRole = ["/barang"];
   let location = useLocation();
   let count = 0;

@@ -22,6 +22,7 @@ const Nav = () => {
     api.post('api/logout',"",config).then((res) =>{
       localStorage.removeItem("token")
       localStorage.removeItem("user")
+      Cookies.remove('cart')
       navigate('/')
     })
   }
