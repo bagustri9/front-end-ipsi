@@ -45,13 +45,8 @@ const Nav = () => {
     if (isLogin) {
       getProfile();
     }
-<<<<<<< HEAD
-  });
-  console.log(keranjang);
-=======
   }, []);
   console.log(keranjang)
->>>>>>> f98dce5b483a151c425cac0fd1be692f01947fb5
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
       {/* Sidebar Toggle (Topbar) */}
@@ -93,26 +88,12 @@ const Nav = () => {
                 alt="..."
                 />
               </div> */}
-<<<<<<< HEAD
-            {keranjang
-              ? keranjang.map((cart, idx) => {
-                  return (
-                    <BarangKeranjang
-                      nama={cart.nama_barang}
-                      kuantitas={cart.kuantitas}
-                      key={idx}
-                    />
-                  );
-                })
-              : ""}
-=======
               {keranjang.length !== 0 ? (keranjang.map((cart, idx) => {
                 return (
                   <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
                 )
               })) : ""
               }
->>>>>>> f98dce5b483a151c425cac0fd1be692f01947fb5
             <NavLink
               className="dropdown-item text-center big bg-gradient-blue-100"
               to="/peminjaman"
