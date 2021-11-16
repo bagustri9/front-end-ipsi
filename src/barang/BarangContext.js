@@ -68,7 +68,7 @@ export const BarangProvider = props => {
 
     return(
         <BarangContext.Provider value= {{keranjang, setKeranjang, 
-        barang, setBarang, fetch, setFetch, crud, userTransaksi, setUserTransaksi}}>
+        barang, setBarang, fetch, setFetch, crud, userTransaksi, setUserTransaksi, successSwal}}>
             {props.children}
         </BarangContext.Provider>
     )
