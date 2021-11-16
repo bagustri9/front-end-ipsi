@@ -8,60 +8,69 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import withReactContent from "sweetalert2-react-content";
 import Cookies from "js-cookie";
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 
 const Peminjaman = () => {
   const swal = withReactContent(Swal);
   const { keranjang, setKeranjang } = useContext(BarangContext);
   let user = JSON.parse(localStorage.getItem("user"));
   let navigate = useNavigate();
+
+
   const meminjam = (e) => {
     e.preventDefault();
-    let name = e.target.name.value;
-    let email = e.target.email.value;
-    let phone = e.target.phone.value;
-    let alamat = e.target.alamat.value;
-    let durasi = e.target.durasi.value;
-    let jaminan = e.target.jaminan.value;
 
-    var date = new Date();
-    var today = date.toISOString().split("T")[0];
-    var pengembalian = new Date(
-      date.setDate(date.getDate() + Number.parseInt(durasi))
-    )
-      .toISOString()
-      .split("T")[0];
-
-    let peminjaman = {
-      user_id: user.id,
-      total: totalHarga(),
-      barang_jaminan: jaminan,
-      tanggal_rental: today,
-      rencana_pengembalian: pengembalian,
-      cart : keranjang
-    };
-    swal.showLoading();
-    api
-      .post(`api/peminjaman`, peminjaman, config)
-      .then((res) => {
-        swal
-          .fire({
-            title: <strong>Berhasil Meminjam !</strong>,
-            html: <i>peminjaman berhasil !</i>,
-            icon: "success",
-          })
-          .then(() => {
-            Cookies.remove('cart')
-            setKeranjang([])
-            navigate("/");
+    if(keranjang.length === 0 ) {
+      successSwal("Keranjang Kosong", "warning")
+    } else {
+      let name = e.target.name.value;
+      let email = e.target.email.value;
+      let phone = e.target.phone.value;
+      let alamat = e.target.alamat.value;
+      let durasi = e.target.durasi.value;
+      let jaminan = e.target.jaminan.value;
+  
+      var date = new Date();
+      var today = date.toISOString().split("T")[0];
+      var pengembalian = new Date(
+        date.setDate(date.getDate() + Number.parseInt(durasi))
+      )
+        .toISOString()
+        .split("T")[0];
+  
+      let peminjaman = {
+        user_id: user.id,
+        total: totalHarga(),
+        barang_jaminan: jaminan,
+        tanggal_rental: today,
+        rencana_pengembalian: pengembalian,
+        cart : keranjang
+      };
+      swal.showLoading();
+      api
+        .post(`api/peminjaman`, peminjaman, config)
+        .then((res) => {
+          swal
+            .fire({
+              title: <strong>Berhasil Meminjam !</strong>,
+              html: <i>peminjaman berhasil !</i>,
+              icon: "success",
+            })
+            .then(() => {
+              Cookies.remove('cart')
+              setKeranjang([])
+              navigate("/");
+            });
+        })
+        .catch((err) => {
+          swal.fire({
+            title: <strong>Gagal Meminjam !</strong>,
+            html: <i>Terdapat kesalahan</i>,
+            icon: "error",
           });
-      })
-      .catch((err) => {
-        swal.fire({
-          title: <strong>Gagal Meminjam !</strong>,
-          html: <i>Terdapat kesalahan</i>,
-          icon: "error",
         });
-      });
+    }
   };
 
   const totalHarga = () => {
@@ -76,6 +85,15 @@ const Peminjaman = () => {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
+
+  const successSwal = (text, ico) => {
+    Swal.fire({
+        icon: ico,
+        title: text,
+        showConfirmButton: false,
+        timer: 2000
+      })
+}
   return (
     <>
       <Judul

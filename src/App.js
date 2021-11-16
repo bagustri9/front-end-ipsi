@@ -15,6 +15,8 @@ import Profile from "./user/Profile";
 import { BarangProvider } from "./barang/BarangContext"
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import DaftarPeminjaman from "./transaksi/DaftarPeminjaman";
+import JadwalPeminjaman from "./barang/Jadwal Peminjaman";
 axios.defaults.withCredentials = true;
 const App = () => {
   return (
@@ -25,10 +27,13 @@ const App = () => {
             <Route path="/history" element={< History />}/>
             <Route path="/peminjaman" element={< Peminjaman />}/>
             <Route path="/barang" element={< ListBarang />}/>
+            <Route path="/jadwal" element={< JadwalPeminjaman />}/>
+            <Route path="/peminjamans" element={< DaftarPeminjaman />}/>
             <Route path="/profile" element={<EditProfile />} />
             <Route path="/daftar-barang" element={< CardData />}/>
             <Route path="/lokasi" element={< Lokasi />}/>
             <Route path="/faq" element={< Faq />}/>
+            <Route path="/testing" element={< DaftarPeminjaman />}/>
           </Route>
           <Route path="/login" element={< Login />}/>
           <Route path="/register" element={< Regis />}/>

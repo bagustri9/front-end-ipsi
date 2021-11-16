@@ -2,8 +2,29 @@ import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
 import Auth from "../components/Auth";
 import Judul from "../menubar/judul";
+import api from "../api"
+import {useState, useEffect} from "react"
 
 const History = () => {
+
+  const [riwayat, setRiwayat] = useState([])
+
+  let user = JSON.parse(localStorage.getItem("user"));
+
+
+  const fetchRiwayat = async() => {
+    console.log(user.id)
+    await api.get(`/api/peminjaman/user/${user.id}`).then((res) => {
+      setRiwayat(res.data)
+      console.log(res.data)
+      console.log(riwayat)
+    })
+  }
+
+  useEffect(() => {
+    fetchRiwayat()
+  }, [])
+
   return (
     <>
       <Judul
@@ -21,12 +42,22 @@ const History = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>{new Date().toLocaleDateString()}</td>
-              <td>Sony A7S BO, Lensa Fix 50mm</td>
-              <td>Telah dikembalikan</td>
-            </tr>
+            {riwayat.map((arr, idx) => {
+              return(
+                <tr>
+                  <td>{idx + 1}</td>
+                  <td>{arr.tanggal_rental}</td>
+                  <td>
+                  {arr.cart.map((isi) => {
+                    return(
+                      isi.nama_barang + ", "
+                    )
+                  })}
+                  </td>
+                  <td>{arr.status === 0 ? "Belum Dibayar" : arr.status === 1 ? "Dipinjam" : "Dikembalikan"}</td>
+                </tr>
+              )
+            })}
           </tbody>
         </Table>
       </Card>
