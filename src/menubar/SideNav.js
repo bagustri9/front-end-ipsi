@@ -56,7 +56,7 @@ const SideNav = () => {
             <NavLink activeClassName="active" className="collapse-item" to="/daftar-barang">
               Data Barang Rental
             </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/faq">
+            <NavLink activeClassName="active" className="collapse-item" to="/jadwal">
               Jadwal Peminjaman
             </NavLink>
           </div>
