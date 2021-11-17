@@ -11,6 +11,7 @@ const TabelRental = () => {
     const [datas, setDatas] = useState([])
     const [isLoading, setLoading] = useState()
     const swal = withReactContent(Swal)
+
     const fetchData = async () => {
         setLoading(true)
         let request = await api.get("api/peminjamans")
@@ -23,7 +24,7 @@ const TabelRental = () => {
         console.log(id)
       }
 
-      const editModal = (tipe, data) => {
+      const editData = (data) => {
         console.log("edit")
       }
 
@@ -47,7 +48,7 @@ const TabelRental = () => {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan="5" align="center">
+                <td colSpan="6" align="center">
                   <Spinner animation="border" />
                 </td>
               </tr>
@@ -90,7 +91,7 @@ const TabelRental = () => {
                         className="mx-1"
                         color="green"
                         style={{ cursor: "pointer" }}
-                        onClick={() => editModal("edit", items)}
+                        onClick={() => editData(items)}
                       />
                     </div>
                   </td>

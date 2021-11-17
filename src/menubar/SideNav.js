@@ -1,8 +1,18 @@
 import {NavLink} from 'react-router-dom'
 import Logo from '../assets/img/logo.png'
 import {BsFillCameraFill, BsFillBagCheckFill, BsPeopleFill, BsFillFolderFill, BsFolderFill} from "react-icons/bs";
+import { useContext } from "react";
+import { BarangContext } from "../barang/BarangContext";
+
 
 const SideNav = () => {
+
+  let cekAdmin = undefined
+  if(localStorage.getItem("user")) {
+    cekAdmin = JSON.parse(localStorage.getItem("user"))
+    cekAdmin = cekAdmin.role
+  }
+
   return (
     <ul
       className="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion"
@@ -116,39 +126,42 @@ const SideNav = () => {
           </div>
         </div>
       </li>
-
-      <div className="sidebar-heading mt-3">
-        Admin
-        <hr className="mt-1 mb-1"/>
-      </div>
-      <li className="nav-item">
-        <a
-          className="nav-link collapsed mt-0"
-          data-toggle="collapse"
-          href="#"
-          data-target="#collapseFive"
-          aria-expanded="true"
-          aria-controls="collapseFive">
-          <BsFillFolderFill className="mr-2"/>
-          <span>Menu Admin</span>
-        </a>
-
-        <div
-          id="collapseFive"
-          className="collapse"
-          aria-labelledby="headingFive"
-          data-parent="#accordionSidebar"
-        >
-          <div className="bg-white py-2 collapse-inner rounded">
-            <NavLink activeClassName="active" className="collapse-item" to="/barang">
-              Kelola Barang
-            </NavLink>
-            <NavLink activeClassName="active" className="collapse-item" to="/peminjamans">
-              Kelola Peminjaman
-            </NavLink>
-          </div>
+      {cekAdmin === "Admin" ? (
+        <>
+          <div className="sidebar-heading mt-3">
+          Admin
+          <hr className="mt-1 mb-1"/>
         </div>
-      </li>
+        <li className="nav-item">
+          <a
+            className="nav-link collapsed mt-0"
+            data-toggle="collapse"
+            href="#"
+            data-target="#collapseFive"
+            aria-expanded="true"
+            aria-controls="collapseFive">
+            <BsFillFolderFill className="mr-2"/>
+            <span>Menu Admin</span>
+          </a>
+
+          <div
+            id="collapseFive"
+            className="collapse"
+            aria-labelledby="headingFive"
+            data-parent="#accordionSidebar"
+          >
+            <div className="bg-white py-2 collapse-inner rounded">
+              <NavLink activeClassName="active" className="collapse-item" to="/barang">
+                Kelola Barang
+              </NavLink>
+              <NavLink activeClassName="active" className="collapse-item" to="/peminjamans">
+                Kelola Peminjaman
+              </NavLink>
+            </div>
+          </div>
+        </li>
+        </>
+      ) : ""}
     </ul>
   );
 };

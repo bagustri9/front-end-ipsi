@@ -11,6 +11,7 @@ export const BarangProvider = props => {
     const [barang, setBarang] = useState([])
     const [fetch, setFetch] = useState(true)
     const [userTransaksi, setUserTransaksi] = useState([])
+    const [special, setSpecial] = useState(false)
 
     useEffect(() => {
         const checkCookie = () => {
@@ -68,7 +69,7 @@ export const BarangProvider = props => {
 
     return(
         <BarangContext.Provider value= {{keranjang, setKeranjang, 
-        barang, setBarang, fetch, setFetch, crud, userTransaksi, setUserTransaksi, successSwal}}>
+        barang, setBarang, fetch, setFetch, crud, userTransaksi, setUserTransaksi, successSwal, special, setSpecial}}>
             {props.children}
         </BarangContext.Provider>
     )
