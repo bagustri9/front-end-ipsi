@@ -13,9 +13,8 @@ const TabelPeminjaman = () => {
     const swal = withReactContent(Swal)
     const fetchData = async () => {
         setLoading(true)
-        let request = await api.get("api/peminjamans")
-        let unpaid = request.data.filter((item => item.status === 2))
-        setDatas(unpaid)
+        let request = await api.get("api/pengembalian")
+        setDatas(request.data)
         setLoading(false)
     }
 
@@ -64,11 +63,11 @@ const TabelPeminjaman = () => {
         <Table striped bordered hover size="md">
           <thead>
             <tr>
-              <th scope="col">No</th>
-              <th scope="col">Tanggal Peminjaman</th>
+              <th scope="col" className="tableDataCenter">No</th>
               <th scope="col">Nama Peminjam</th>
-              <th scope="col">Jumlah Peminjaman</th>
-              <th scope="col">Action</th>
+              <th scope="col">Tanggal Peminjaman</th>
+              <th scope="col">Tanggal Pengembalian</th>
+              <th scope="col">Denda</th>
             </tr>
           </thead>
           <tbody>
@@ -84,6 +83,7 @@ const TabelPeminjaman = () => {
                   <td
                     onClick={() => detailData(items.id)}
                     style={{ cursor: "pointer" }}
+                    className="tableDataCenter"
                   >
                     {i + 1}
                   </td>
@@ -91,35 +91,25 @@ const TabelPeminjaman = () => {
                     onClick={() => detailData(items.id)}
                     style={{ cursor: "pointer" }}
                   >
-                    {items.tanggal_rental}
+                    {items.info.nama_lengkap}
                   </td>
                   <td
                     onClick={() => detailData(items.id)}
                     style={{ cursor: "pointer" }}
                   >
-                    {items.peminjam.nama_lengkap}
+                    {items.barang.tanggal_rental}
                   </td>
                   <td
                     onClick={() => detailData(items.id)}
                     style={{ cursor: "pointer" }}
                   >
-                    {items.cart.length} Barang, Rp{items.total}
+                    {items.pengembalian}
                   </td>
-                  <td>
-                    <div className="float-end">
-                      <BsFillCheckCircleFill
-                        className="mx-1"
-                        color="green"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => editModal("edit", items)}
-                      />
-                      <BsXCircleFill
-                        className="mx-1"
-                        color="red"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => deleteData(items.id)}
-                      />
-                    </div>
+                  <td
+                    onClick={() => detailData(items.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {items.denda}
                   </td>
                 </tr>
               ))

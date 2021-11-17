@@ -25,7 +25,8 @@ function Login(props) {
           localStorage.setItem("user", JSON.stringify(response.data.user));
           swal.fire({
             title: <strong>Berhasil Login !</strong>,
-            html: <i>tekan ok untuk melanjutkan</i>,
+            timer: 1500,
+            showConfirmButton: false,
             icon: "success",
           }).then(() => {
             navigate("/");
@@ -36,6 +37,8 @@ function Login(props) {
             swal.fire({
               title: <strong>Gagal Login !</strong>,
               html: <i>Email atau password salah</i>,
+              showConfirmButton: false,
+              timer: 1500,
               icon: "error",
             });
           }

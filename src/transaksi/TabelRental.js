@@ -1,5 +1,5 @@
 import { Col, Table, Row, Modal } from "react-bootstrap"
-import { BsXCircleFill, BsFillCheckCircleFill } from "react-icons/bs"
+import { BsFillCheckCircleFill } from "react-icons/bs"
 import Spinner from "react-bootstrap/Spinner"
 import { useState, useEffect } from "react"
 import withReactContent from "sweetalert2-react-content"
@@ -25,8 +25,41 @@ const TabelRental = () => {
       }
 
       const editData = (data) => {
-        console.log("edit")
+        swal.fire({
+          title: "Apakah barang sudah dikembalikan ?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya, sudah!",
+          cancelButtonText: "Belum"
+      })
+      .then((result) => {
+          if (result.isConfirmed) {
+            let dikembalikan = {
+              peminjaman_id: data.id,
+              pengembalian: new Date().toISOString().split("T")[0],
+              denda: 0
+            }
+            api.post(`api/pengembalian`, dikembalikan, config).then((res) => {
+              fetchData()
+            })
+          } else if (result.dismiss === swal.DismissReason.cancel) {
+          swal.fire("Belum", "Barang belum dikembalikan", "error")
+          }
+      })
+      .catch((err) => {
+          swal.fire("Kesalahan pemindahan barang!", "Error :" + err, "error")
+      })
+
+        
       }
+
+      let config = {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
 
       useEffect(() => {
         fetchData()
@@ -37,12 +70,12 @@ const TabelRental = () => {
         <Table striped bordered hover size="md">
           <thead>
             <tr>
-              <th scope="col">No</th>
+              <th scope="col" className="tableDataCenter">No</th>
               <th scope="col">Tanggal Peminjaman</th>
-              <th scope="col">Tanggal Pengembalian</th>
+              <th scope="col">Rencana Pengembalian</th>
               <th scope="col">Nama Peminjam</th>
               <th scope="col">Jumlah Peminjaman</th>
-              <th scope="col">Action</th>
+              <th scope="col" className="tableDataCenter">Action</th>
             </tr>
           </thead>
           <tbody>

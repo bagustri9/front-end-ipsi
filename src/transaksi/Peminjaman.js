@@ -8,8 +8,6 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import withReactContent from "sweetalert2-react-content";
 import Cookies from "js-cookie";
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
 
 const Peminjaman = () => {
   const swal = withReactContent(Swal);
@@ -33,11 +31,7 @@ const Peminjaman = () => {
   
       var date = new Date();
       var today = date.toISOString().split("T")[0];
-      var pengembalian = new Date(
-        date.setDate(date.getDate() + Number.parseInt(durasi))
-      )
-        .toISOString()
-        .split("T")[0];
+      var pengembalian = new Date(date.setDate(date.getDate() + Number.parseInt(durasi))).toISOString().split("T")[0];
   
       let peminjaman = {
         user_id: user.id,

@@ -96,11 +96,11 @@ const TabelPeminjaman = () => {
         <Table striped bordered hover size="md">
           <thead>
             <tr>
-              <th scope="col">No</th>
+              <th scope="col" className="tableDataCenter">No</th>
               <th scope="col">Tanggal Peminjaman</th>
               <th scope="col">Nama Peminjam</th>
               <th scope="col">Jumlah Peminjaman</th>
-              <th scope="col">Action</th>
+              <th scope="col" className="tableDataCenter">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -110,12 +110,13 @@ const TabelPeminjaman = () => {
                   <Spinner animation="border" />
                 </td>
               </tr>
-            ) : (
+            ) : (datas.length !== 0 ? (
               datas.map((items, i) => (
                 <tr key={i} >
                   <td
                     onClick={() => detailData(items.id)}
                     style={{ cursor: "pointer" }}
+                    className="tableDataCenter"
                   >
                     {i + 1}
                   </td>
@@ -138,7 +139,7 @@ const TabelPeminjaman = () => {
                     {items.cart.length} Barang, Rp{items.total}
                   </td>
                   <td>
-                    <div className="float-end">
+                    <div className="tableDataCenter">
                       <BsFillCheckCircleFill
                         className="mx-1"
                         color="green"
@@ -155,7 +156,13 @@ const TabelPeminjaman = () => {
                   </td>
                 </tr>
               ))
-            )}
+            ) : (
+              <tr>
+                <td colSpan="5" align="center">
+                  Tidak ada invoice peminjaman
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Col>

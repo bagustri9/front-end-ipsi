@@ -1,5 +1,6 @@
 import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
+import Badge from 'react-bootstrap/Badge'
 import Auth from "../components/Auth";
 import Judul from "../menubar/judul";
 import api from "../api"
@@ -54,7 +55,10 @@ const History = () => {
                     )
                   })}
                   </td>
-                  <td>{arr.status === 0 ? "Belum Dibayar" : arr.status === 1 ? "Dipinjam" : "Dikembalikan"}</td>
+                  <td>{arr.status === 0 ? (<Badge bg="warning" text="dark">Belum Dibayar</Badge>) 
+                  : arr.status === 1 ? (<Badge bg="primary">Sedang Dipinjam</Badge>) 
+                  : (<Badge bg="success">Telah Dikembalikan</Badge>)}
+                  </td>
                 </tr>
               )
             })}
