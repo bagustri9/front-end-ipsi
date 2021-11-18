@@ -12,6 +12,7 @@ import Aplikasi from "./user/Aplikasi";
 import Login from "./user/Login";
 import Regis from "./user/Regis";
 import Forgot from "./user/Forgot";
+import ResetPass from "./user/ResetPass";
 import Profile from "./user/Profile";
 import { BarangProvider } from "./barang/BarangContext"
 
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/login" element={< Login />}/>
           <Route path="/register" element={< Regis />}/>
           <Route path="/forgot" element={< Forgot />}/>
+          <Route path="/reset-password/:token/" element={< ResetPass />} />
         </Routes>
       </Router>
     </BarangProvider>

@@ -1,48 +1,50 @@
 import api from "../api.js";
-import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/img/logo.png";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-function Login(props) {
+function ResetPass(props) {
   const swal = withReactContent(Swal);
   let navigate = useNavigate();
+  let { token } = useParams();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let email = e.target.email.value;
     let passw = e.target.passw.value;
+    let passw2 = e.target.passw2.value;
     let data = {
-      email: email,
-      password: passw,
-    };
+        'token' : token,
+        'email' : email,
+        'password' : passw,
+        'password_confirmation' : passw2,
+    }
     swal.showLoading()
-    api.get("/sanctum/csrf-cookie").then((response) => {
-      api
-        .post(`/api/login/`, data)
-        .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
-          swal.fire({
-            title: <strong>Berhasil Login !</strong>,
-            timer: 1500,
-            showConfirmButton: false,
-            icon: "success",
-          }).then(() => {
-            navigate("/");
-          });
-        })
-        .catch((error) => {
-          if (error.response.status == 401) {
-            swal.fire({
-              title: <strong>Gagal Login !</strong>,
-              html: <i>Email atau password salah</i>,
-              showConfirmButton: false,
-              timer: 1500,
-              icon: "error",
-            });
-          }
+    api
+    .post("api/reset-password", data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.email == "This password reset token is invalid.") {
+        swal.fire({
+          title: <strong>Gagal !</strong>,
+          html: <i>Token invalid, cek email dan token !</i>,
+          icon: "error",
         });
+      } else {
+        swal.fire({
+          title: <strong>Berhasil !</strong>,
+          html: <i>Password telah diubah !</i>,
+          icon: "success",
+        });
+        navigate('/login')
+      }
+    })
+    .catch(() => {
+      swal.fire({
+        title: <strong>Error !</strong>,
+        html: <i>Something went wrong !</i>,
+        icon: "error",
+      });
     });
   };
 
@@ -58,10 +60,10 @@ function Login(props) {
                   <div className="p-5">
                     <div className="text-center">
                       <img src={Logo} width="90" />
-                      <h1 className="h4 text-gray-900 mb-4">Login</h1>
+                      <h1 className="h4 text-gray-900 mb-4">Reset Password</h1>
                     </div>
                     <form className="user" onSubmit={handleSubmit}>
-                      <div className="form-group">
+                      <div className="form-group mb-1">
                         <input
                           type="email"
                           className="form-control form-control-user"
@@ -71,12 +73,21 @@ function Login(props) {
                           required
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group mb-1">
                         <input
                           type="password"
                           className="form-control form-control-user"
                           id="passw"
-                          placeholder="Password"
+                          placeholder="Password Baru"
+                          required
+                        />
+                      </div>
+                      <div className="form-group mb-1">
+                        <input
+                          type="password"
+                          className="form-control form-control-user"
+                          id="passw2"
+                          placeholder="Confirm Password"
                           required
                         />
                       </div>
@@ -84,33 +95,23 @@ function Login(props) {
                         <div className="text-end">
                           <Link
                             className="small"
-                            to="/forgot"
+                            to="/login"
                             style={{
                               textDecoration: "none",
                             }}
                           >
-                            Lupa Password?
+                            Kembali ke login
                           </Link>
                           <br />
                         </div>
                       </div>
                       <input
-                        className="btn btn-primary btn-user btn-block"
+                        className="btn btn-primary btn-user mx-auto btn-block"
                         type="submit"
-                        value="Login"
+                        value="Submit"
                       />
                     </form>
-                    <br/>
-                    <div className="text-center">
-                      <p className="small">
-                        Belum punya akun?
-                        <Link to="/register" style={{
-                              textDecoration: "none",
-                            }}>
-                          <b> Daftar!</b>
-                        </Link>
-                      </p>
-                    </div>
+                    <br />
                   </div>
                 </div>
                 <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
@@ -123,4 +124,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default ResetPass;

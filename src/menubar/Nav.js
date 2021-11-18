@@ -7,8 +7,11 @@ import {useContext} from "react"
 import { BarangContext } from "../barang/BarangContext"
 import {useState, useEffect} from "react"
 import Cookies from 'js-cookie'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const Nav = () => {
+  const swal = withReactContent(Swal);
   let [user, setUser] = useState({ image: null });
   const {keranjang, setKeranjang, fetch, setFetch} = useContext(BarangContext)
   let isLogin = localStorage.getItem("token") === null ? false : true
@@ -19,11 +22,19 @@ const Nav = () => {
     }
   }
   const logout = () =>{
+    swal.showLoading()
     api.post('api/logout',"",config).then((res) =>{
       localStorage.removeItem("token")
       localStorage.removeItem("user")
       Cookies.remove('cart')
-      navigate('/')
+      swal.fire({
+        title: <strong>Sukses Logout !</strong>,
+        timer: 1500,
+        showConfirmButton: false,
+        icon: "success",
+      }).then(() => {
+        navigate('/')
+      })
     })
   }
   const getProfile = async () => {
