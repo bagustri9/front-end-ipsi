@@ -69,14 +69,15 @@ const EditProfile = () => {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
+  
   return (
     <>
       <Judul title="Profile" info="Ubah profile sesuai keinginanmu!" />
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
+      <div className="card shadow mb-4">
+        <div className="card-header py-3">
           <div className="row">
             <div className="col-10">
-              <h4 class="m-0 font-weight-bold text-primary">
+              <h4 className="m-0 font-weight-bold text-primary">
                 {loading ? <Spinner animation="border" /> : user.nama_lengkap}
               </h4>
             </div>
@@ -94,7 +95,7 @@ const EditProfile = () => {
             />
           </Modal.Body>
         </Modal>
-        <div class="card-body row">
+        <div className="card-body row">
           <div className="col-md-4 col-sm-12 position-relative">
             <div className="img-wrapper">
               {user.image ? (
@@ -113,10 +114,10 @@ const EditProfile = () => {
           </div>
           <div className="col-md-8">
             <form onSubmit={handleSubmit}>
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Nama Lengkap"
                   id="nama_lengkap"
                   defaultValue={user.nama_lengkap}
@@ -124,10 +125,10 @@ const EditProfile = () => {
                 />
               </div>
               
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="email"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Email"
                   id="email"
                   defaultValue={user.email}
@@ -135,10 +136,10 @@ const EditProfile = () => {
                 />
               </div>
               
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="number"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Nomor Telepon"
                   id="phone"
                   defaultValue={user.phone}
@@ -146,10 +147,10 @@ const EditProfile = () => {
                 />
               </div>
               
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Alamat"
                   id="alamat"
                   defaultValue={user.alamat}
@@ -157,9 +158,9 @@ const EditProfile = () => {
                 />
                 </div>
                 
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <select
-                  class="form-control"
+                  className="form-control"
                   placeholder="Gender"
                   id="gender"
                   defaultValue={user.gender}
@@ -170,10 +171,10 @@ const EditProfile = () => {
                 </select>
               </div>
 
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Tanggal Lahir"
                   id="tanggal_hahir"
                   defaultValue={user.tanggal_hahir}
@@ -181,10 +182,10 @@ const EditProfile = () => {
                 />
               </div>
 
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="password"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Password"
                   id="password"
                   defaultValue={user.password}
@@ -192,10 +193,10 @@ const EditProfile = () => {
                 />
               </div>
 
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="password"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Konfirmasi Password"
                   id="password_confirmation"
                   defaultValue={user.password}
