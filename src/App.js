@@ -41,7 +41,7 @@ const App = () => {
           <Route path="/login" element={< Login />}/>
           <Route path="/register" element={< Regis />}/>
           <Route path="/forgot" element={< Forgot />}/>
-          <Route path="/reset-password/:token/" element={< ResetPass />} />
+          <Route path="/reset-password/:token" element={< ResetPass />} />
         </Routes>
       </Router>
     </BarangProvider>
