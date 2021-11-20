@@ -58,6 +58,8 @@ const Nav = () => {
       getProfile();
     }
   }, []);
+
+  console.log(keranjang)
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
       {/* Sidebar Toggle (Topbar) */}
@@ -92,16 +94,9 @@ const Nav = () => {
             aria-labelledby="messagesDropdown"
           >
             <h6 className="dropdown-header">Keranjang Barang</h6>
-            {/* <div className="dropdown-list-image mr-3">
-                <img
-                className="rounded-circle"
-                src="img/undraw_profile_1.svg"
-                alt="..."
-                />
-              </div> */}
               {keranjang.length !== 0 ? (keranjang.map((cart, idx) => {
                 return (
-                  <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} key={idx}/>
+                  <BarangKeranjang nama={cart.nama_barang} kuantitas={cart.kuantitas} idea={cart.id} key={idx}/>
                 )
               })) : ""
               }
