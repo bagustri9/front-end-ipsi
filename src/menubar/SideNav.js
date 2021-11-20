@@ -7,6 +7,8 @@ import { BarangContext } from "../barang/BarangContext";
 
 const SideNav = () => {
 
+  const { sideToggle } = useContext(BarangContext)
+
   let cekAdmin = undefined
   if(localStorage.getItem("user")) {
     cekAdmin = JSON.parse(localStorage.getItem("user"))
@@ -15,7 +17,8 @@ const SideNav = () => {
 
   return (
     <ul
-      className="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion"
+      className={ sideToggle ? 'navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion toggled' : 
+      'navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion'} 
       id="accordionSidebar"
     >
       <NavLink

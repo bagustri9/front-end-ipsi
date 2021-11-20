@@ -1,3 +1,5 @@
+import jQuery from '../vendor/jquery/jquery'
+
 (function($) {
   "use strict"; // Start of use strict
 

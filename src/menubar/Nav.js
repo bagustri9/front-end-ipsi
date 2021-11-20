@@ -13,7 +13,7 @@ import withReactContent from "sweetalert2-react-content";
 const Nav = () => {
   const swal = withReactContent(Swal);
   let [user, setUser] = useState({ image: null });
-  const {keranjang, setKeranjang, fetch, setFetch} = useContext(BarangContext)
+  const {keranjang, setKeranjang, fetch, setFetch, sideToggle, setSideToggle} = useContext(BarangContext)
   let isLogin = localStorage.getItem("token") === null ? false : true
   let navigate = useNavigate()
   let config = {
@@ -65,8 +65,10 @@ const Nav = () => {
       {/* Sidebar Toggle (Topbar) */}
       <button
         id="sidebarToggleTop"
-        className="btn btn-link rounded-circle mr-3"
-      >
+        onClick={()=> {
+          setSideToggle(!sideToggle)
+        }}
+        className="btn btn-link rounded-circle mr-3">
         <i className="fa fa-bars"></i>
       </button>
 
