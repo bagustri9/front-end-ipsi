@@ -8,6 +8,7 @@ function ResetPass(props) {
   const swal = withReactContent(Swal);
   let navigate = useNavigate();
   let { token } = useParams();
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     let email = e.target.email.value;
