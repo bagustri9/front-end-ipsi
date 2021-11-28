@@ -108,7 +108,7 @@ const CardData = (props) =>  {
             <Spinner className="mx-auto" animation="border" />
           ) : (
             datas.map((barang, idx) => (
-              <Col md={3} sm={12}>
+              <Col md={3} sm={12} key={idx}>
                 <Card className="cardBarang" key={idx}>
                   <Carousel>
                     {barang.gambar.map((gambar, idx) => (
@@ -117,6 +117,7 @@ const CardData = (props) =>  {
                           key={idx}
                           className="d-block w-100 h-50"
                           src={gambar.url}
+                          style={{height: 300, objectFit: 'cover'}}
                         />
                       </Carousel.Item>
                     ))}
@@ -124,7 +125,7 @@ const CardData = (props) =>  {
                   <Card.Body>
                     <Card.Title>{barang.nama_barang}</Card.Title>
                   </Card.Body>
-                  <ListGroup className="list-group-flush">
+                  <ListGroup className="list-group-flush" key={idx}>
                     <ListGroupItem >
                       Tersedia : {barang.kuantitas} unit
                     </ListGroupItem>

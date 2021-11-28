@@ -55,6 +55,7 @@ const EditProfile = () => {
     let request = await api.get("api/user/" + user.id, config);
     setUser(request.data);
     setLoading(false);
+    console.log(user)
   };
 
   const toggleModal = (param) => {

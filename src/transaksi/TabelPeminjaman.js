@@ -1,23 +1,16 @@
 import { Col, Table, Row, Modal } from "react-bootstrap"
 import { BsXCircleFill, BsFillCheckCircleFill } from "react-icons/bs"
 import Spinner from "react-bootstrap/Spinner"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import withReactContent from "sweetalert2-react-content"
 import api from "../api.js"
 import Swal from "sweetalert2"
 
-const TabelPeminjaman = () => {
+const TabelPeminjaman = (props) => {
 
-    const [datas, setDatas] = useState([])
     const [isLoading, setLoading] = useState()
     const swal = withReactContent(Swal)
-    const fetchData = async () => {
-        setLoading(true)
-        let request = await api.get("api/peminjamans")
-        let unpaid = request.data.filter((item => item.status === 0))
-        setDatas(unpaid)
-        setLoading(false)
-    }
+    let datas = props.isi.filter((item => item.status == 0))
 
     const detailData = (id) => {
         console.log(id)
@@ -41,7 +34,7 @@ const TabelPeminjaman = () => {
                 swal
                 .fire("Berhasil!", "Barang berhasil dipinjam!", "success")
                 .then(() => {
-                    fetchData()
+                  props.refresh()
                 })
             })
             } else if (result.dismiss === swal.DismissReason.cancel) {
@@ -69,7 +62,7 @@ const TabelPeminjaman = () => {
                 swal
                 .fire("Deleted!", "Data berhasil dihapus!", "success")
                 .then(() => {
-                    fetchData()
+                  props.refresh()
                 })
             })
             } else if (result.dismiss === swal.DismissReason.cancel) {
@@ -86,10 +79,6 @@ const TabelPeminjaman = () => {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       };
-
-      useEffect(() => {
-        fetchData()
-      }, [])
 
     return(
 <Col sm={12} className="mx-auto card shadow px-3 py-3">

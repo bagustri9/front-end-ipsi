@@ -24,6 +24,7 @@ function FormBarang({ refresh, type, modal, data }) {
     setGambar(images);
   }
   const simpan = (input) => {
+    MySwal.showLoading()
     fd.append("nama_barang", input.nama_barang);
     fd.append("tipe_barang", input.tipe_barang);
     fd.append("kuantitas", input.kuantitas);
@@ -45,6 +46,7 @@ function FormBarang({ refresh, type, modal, data }) {
     });
   };
   const edit = (input) => {
+    MySwal.showLoading()
     fd.append("nama_barang", input.nama_barang);
     fd.append("tipe_barang", input.tipe_barang);
     fd.append("kuantitas", input.kuantitas);
@@ -97,12 +99,7 @@ function FormBarang({ refresh, type, modal, data }) {
               <option value="Tripod">Tripod</option>
               <option value="Lensa">Lensa</option>
           </Form.Select>
-          {/* <Form.Control
-            {...register("tipe_barang", { required: true })}
-            type="text"
-            placeholder="Tipe Barang"
-            defaultValue={data.tipe_barang}
-          /> */}
+
           {errors.tipe_barang?.type === "required" && (
             <Form.Text className="text-danger">
               {" "}
@@ -113,7 +110,7 @@ function FormBarang({ refresh, type, modal, data }) {
         <Form.Group className="mb-3">
           <Form.Label>Kuantitas</Form.Label>
           <Form.Control
-            {...register("kuantitas", { required: true })}
+            {...register("kuantitas", { required: true, min: 1 })}
             type="number"
             placeholder="Kuantitas"
             defaultValue={data.kuantitas}
@@ -175,10 +172,10 @@ function FormBarang({ refresh, type, modal, data }) {
         </Form.Group>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => modal(false)}>
-            Close Modal
+            Tutup
           </Button>
           <Button type="submit" className="btn btn-primary">
-            Save changes
+            Tambahkan Barang
           </Button>
         </Modal.Footer>
       </Form>

@@ -14,7 +14,7 @@ const Calendar = () => {
         setEvent((event) => [
           ...event,
           {
-            title: data.nama_lengkap,
+            title: data.nama_barang,
             start: data.tanggal_rental,
             end: data.rencana_pengembalian,
           },

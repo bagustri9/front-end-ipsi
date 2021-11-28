@@ -1,24 +1,17 @@
 import { Col, Table, Row, Modal } from "react-bootstrap"
 import { BsFillCheckCircleFill } from "react-icons/bs"
 import Spinner from "react-bootstrap/Spinner"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import withReactContent from "sweetalert2-react-content"
 import api from "../api.js"
 import Swal from "sweetalert2"
+import { BarangContext } from "../barang/BarangContext.js"
 
-const TabelRental = () => {
+const TabelRental = (props) => {
 
-    const [datas, setDatas] = useState([])
     const [isLoading, setLoading] = useState()
     const swal = withReactContent(Swal)
-
-    const fetchData = async () => {
-        setLoading(true)
-        let request = await api.get("api/peminjamans")
-        let unpaid = request.data.filter((item => item.status === 1))
-        setDatas(unpaid)
-        setLoading(false)
-    }
+    let datas = props.isi.filter((item => item.status == 1))
 
     const detailData = (id) => {
         console.log(id)
@@ -36,13 +29,20 @@ const TabelRental = () => {
       })
       .then((result) => {
           if (result.isConfirmed) {
+            let d1 =  new Date(data.rencana_pengembalian)
+            let d2 = new Date(new Date().toISOString().split('T')[0]);
+            let diff = (d2-d1)/3600000/24
             let dikembalikan = {
               peminjaman_id: data.id,
               pengembalian: new Date().toISOString().split("T")[0],
-              denda: 0
+              denda: diff > 0 ? diff * 100000 : 0
             }
             api.post(`api/pengembalian`, dikembalikan, config).then((res) => {
-              fetchData()
+              swal
+                .fire("Berhasil!", "Barang telah dikembalikan!", "success")
+                .then(() => {
+                  props.refresh()
+                })
             })
           } else if (result.dismiss === swal.DismissReason.cancel) {
           swal.fire("Belum", "Barang belum dikembalikan", "error")
@@ -51,8 +51,6 @@ const TabelRental = () => {
       .catch((err) => {
           swal.fire("Kesalahan pemindahan barang!", "Error :" + err, "error")
       })
-
-        
       }
 
       let config = {
@@ -60,10 +58,6 @@ const TabelRental = () => {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       };
-
-      useEffect(() => {
-        fetchData()
-      }, [])
 
     return(
 <Col sm={12} className="mx-auto card shadow px-3 py-3">
@@ -85,7 +79,7 @@ const TabelRental = () => {
                   <Spinner animation="border" />
                 </td>
               </tr>
-            ) : (
+            ) : (datas.length !== 0 ? (
               datas.map((items, i) => (
                 <tr key={i} >
                   <td
@@ -130,7 +124,13 @@ const TabelRental = () => {
                   </td>
                 </tr>
               ))
-            )}
+            ) : (
+              <tr>
+                <td colSpan="6" align="center">
+                  Tidak ada invoice peminjaman
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Col>

@@ -1,4 +1,3 @@
-import {useLocation} from "react-router";
 import axios from "axios";
 import ListBarang from "./barang/ListBarang";
 import CardData from "./barang/CardData";
@@ -13,12 +12,10 @@ import Login from "./user/Login";
 import Regis from "./user/Regis";
 import Forgot from "./user/Forgot";
 import ResetPass from "./user/ResetPass";
-import Profile from "./user/Profile";
 import { BarangProvider } from "./barang/BarangContext"
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import DaftarPeminjaman from "./transaksi/DaftarPeminjaman";
-import JadwalPeminjaman from "./barang/Jadwal Peminjaman";
 axios.defaults.withCredentials = true;
 const App = () => {
   return (
@@ -30,7 +27,6 @@ const App = () => {
             <Route path="/jadwal" element={< Calendar />}/>
             <Route path="/peminjaman" element={< Peminjaman />}/>
             <Route path="/barang" element={< ListBarang />}/>
-            <Route path="/jadwal" element={< JadwalPeminjaman />}/>
             <Route path="/peminjamans" element={< DaftarPeminjaman />}/>
             <Route path="/profile" element={<EditProfile />} />
             <Route path="/daftar-barang" element={< CardData />}/>

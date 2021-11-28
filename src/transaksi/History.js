@@ -43,25 +43,33 @@ const History = () => {
             </tr>
           </thead>
           <tbody>
-            {riwayat.map((arr, idx) => {
-              return(
-                <tr>
-                  <td>{idx + 1}</td>
-                  <td>{arr.tanggal_rental}</td>
-                  <td>
-                  {arr.cart.map((isi) => {
-                    return(
-                      isi.nama_barang + ", "
-                    )
-                  })}
-                  </td>
-                  <td>{arr.status === 0 ? (<Badge bg="warning" text="dark">Belum Dibayar</Badge>) 
-                  : arr.status === 1 ? (<Badge bg="primary">Sedang Dipinjam</Badge>) 
-                  : (<Badge bg="success">Telah Dikembalikan</Badge>)}
-                  </td>
-                </tr>
-              )
-            })}
+            {riwayat.length !== 0 ? (
+              riwayat.map((arr, idx) => {
+                return(
+                  <tr>
+                    <td>{idx + 1}</td>
+                    <td>{arr.tanggal_rental}</td>
+                    <td>
+                    {arr.cart.map((isi) => {
+                      return(
+                        isi.nama_barang + ", "
+                      )
+                    })}
+                    </td>
+                    <td>{arr.status == 0 ? (<Badge bg="warning" text="dark">Belum Dibayar</Badge>) 
+                    : arr.status == 1 ? (<Badge bg="primary">Sedang Dipinjam</Badge>) 
+                    : (<Badge bg="success">Telah Dikembalikan</Badge>)}
+                    </td>
+                  </tr>
+                )
+              })
+            ) : (
+              <tr>
+                <td colSpan="4" align="center">
+                  Tidak ada riwayat peminjaman
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </Card>

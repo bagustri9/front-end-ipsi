@@ -43,9 +43,17 @@ const Peminjaman = () => {
       };
       swal.showLoading();
       api
-        .post(`api/peminjaman`, peminjaman, config)
+        .post(`/api/peminjaman`, peminjaman, config)
         .then((res) => {
-          swal
+
+          if(res.data.code === 422) {
+            swal.fire({
+              title: <strong>Gagal Meminjam !</strong>,
+              html: <i>Stok tidak cukup</i>,
+              icon: "error",
+            });
+          } else {
+            swal
             .fire({
               title: <strong>Berhasil Meminjam !</strong>,
               html: <i>peminjaman berhasil !</i>,
@@ -55,14 +63,15 @@ const Peminjaman = () => {
               Cookies.remove('cart')
               setKeranjang([])
               navigate("/");
-            });
+            }); 
+          }
         })
         .catch((err) => {
-          swal.fire({
-            title: <strong>Gagal Meminjam !</strong>,
-            html: <i>Terdapat kesalahan</i>,
-            icon: "error",
-          });
+            swal.fire({
+              title: <strong>Gagal Meminjam !</strong>,
+              html: <i>Terdapat kesalahan</i>,
+              icon: "error",
+            });
         });
     }
   };
@@ -70,7 +79,7 @@ const Peminjaman = () => {
   const totalHarga = () => {
     let total = 0;
     keranjang.map((arr) => {
-      total += arr.harga_rental;
+      total += parseInt(arr.harga_rental);
     });
     return total;
   };

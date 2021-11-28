@@ -19,7 +19,7 @@ function Login(props) {
     swal.showLoading()
     api.get("/sanctum/csrf-cookie").then((response) => {
       api
-        .post(`/api/login/`, data)
+        .post(`/api/login`, data)
         .then((response) => {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user", JSON.stringify(response.data.user));

@@ -55,7 +55,9 @@ const {keranjang, setKeranjang, barang, setBarang} = useContext(BarangContext)
       })
       .then((result) => {
         if (result.isConfirmed) {
-          api.get("api/barang/" + id + "/delete").then(() => {
+          swal.showLoading()
+          api.get("api/barang/" + id + "/delete").then((res) => {
+            console.log(res)
             swal
               .fire("Deleted!", "Data berhasil dihapus!", "success")
               .then(() => {

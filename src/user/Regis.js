@@ -9,6 +9,16 @@ function Regis(props) {
   const swal = withReactContent(Swal);
   let [error, setError] = useState([]);
   const [show, setShow] = useState(false);
+  const isiSnk = `
+  1. KETENTUAN UTAMA
+  Penyewa menggunakan peralatan tidak untuk kegiatan yang melanggar hukum negara & norma agama. Penyewa tidak akan memindahtangankan alat yang disewa kepada pihak lain. Penyewa ketika melakukan order telah memahami fungsi alat yang disewa. Jika terjadi kerusakan atau kehilangan atas alat yang disewa maka Penyewa sanggup mengganti sepenuhnya.
+    
+  2. PROSEDUR SEWA
+  Penyewa mendaftar sebelum menyewa alat. Setiap sewa ada jaminan, berupa nilai deposit atau pengawal alat (nilainya bisa dilihat di deskripsi produk). Perhitungan dasar harga sewa peralatan adalah pertanggal dengan waktu 24 jam. Alat yang disewa dapat diambil ketika pembayaran telah diselesaikan.
+  ​
+  3. PENGAMBILAN & PENGEMBALIAN ALAT
+  Waktu operasional store untuk pengambilan & pengembalian alat adalah setiap hari, 24 jam. Penyewa bersedia mengambil alat sendiri dan mengembalikan alat tepat waktu.
+  `
 
   let navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -52,6 +62,13 @@ function Regis(props) {
         setShow(true);
       });
   };
+
+  const sNk = () => {
+    Swal.fire({
+      title: 'Syarat dan ketentuan!',
+      text: isiSnk,
+    })
+  }
 
   return (
     <div className="container">
@@ -151,10 +168,11 @@ function Regis(props) {
                             type="checkbox"
                             class="custom-control-input"
                             id="customCheck"
+                            required
                           />
                           <label class="custom-control-label" for="customCheck">
                             Saya telah membaca dan memahami{" "}
-                            <a href="/" style={{ textDecoration: "none" }}>
+                            <a onClick={sNk} style={{ textDecoration: "none", color: '#1890ff', cursor: 'pointer' }}>
                               <b>syarat dan ketentuan</b>
                             </a>{" "}
                             yang berlaku.
